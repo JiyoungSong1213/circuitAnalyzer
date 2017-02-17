@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import plcopen.inf.type.IConnection;
+import plcopen.inf.type.group.fbd.IInVariableInBlock;
 import circuitRelated.CircuitInfo;
 import circuitRelated.ClockNet;
 import circuitRelated.ClockNetSet;
@@ -12,46 +13,46 @@ import circuitRelated.Element;
 
 public class CircuitAnalyzer {
 	
-	public Set<Element> makeClockNetSet (Element currentElem) {
-		Set currentElementSet = new HashSet<Element>();
-		currentElementSet.add(currentElem);
-		if (currentElem.prevElement != null) {
-			for (Element e  : currentElem.prevElement){
-				makeClockNetSetForward(e);
-				currentElementSet.addAll(makeClockNetSet(e));
-				return currentElementSet;
-			}
-		}
-		return null;
-	}
+//	public Set<Element> makeClockNetSet (Element currentElem) {
+//		Set currentElementSet = new HashSet<Element>();
+//		currentElementSet.add(currentElem);
+//		if (currentElem.prevElement != null) {
+//			for (Element e  : currentElem.prevElement){
+//				makeClockNetSetForward(e);
+//				currentElementSet.addAll(makeClockNetSet(e));
+//				return currentElementSet;
+//			}
+//		}
+//		return null;
+//	}
 	
-	public Set<Element> makeClockNetSetForward (Element currentElem) {
-		Set currentElementSet = new HashSet<Element>();
-		if(currentElem.nextElement != null) {
-			for(Element e : currentElem.nextElement) {
-				currentElementSet.add(e);
-				if (e.type == Element.BLOCK && e.block.getTypeName().equals("DIV"))
-					continue;
-				currentElementSet.addAll(makeClockNetSetForward(e));
-				return currentElementSet;
-			}
-		}
-		return null;
-	}
+//	public Set<Element> makeClockNetSetForward (Element currentElem) {
+//		Set currentElementSet = new HashSet<Element>();
+//		if(currentElem.nextElement != null) {
+//			for(Element e : currentElem.nextElement) {
+//				currentElementSet.add(e);
+//				if (e.type == Element.BLOCK && e.block.getTypeName().equals("DIV"))
+//					continue;
+//				currentElementSet.addAll(makeClockNetSetForward(e));
+//				return currentElementSet;
+//			}
+//		}
+//		return null;
+//	}
 	
-	public void divideClockNetSet (ClockNetSet cns) {
-		ClockNet clockNet = new ClockNet();
-		for(Element e : cns.allElementInClockNetSet) {
-			if (e.type == Element.BLOCK && e.block.getTypeName().equals("DIV")) {
-				clockNet.clockNet = makeClockNetForward(e);
-			} else if (e.type == Element.BLOCK && e.block.getTypeName().equals("MUX")) {
-				clockNet.clockNet = makeClockNetForward(e);
-			} else if (e.type == Element.INVAR) {
-				clockNet.clockNet = makeClockNetForward(e);
-			}
-		}
-		CircuitInfo.clockNets.add(clockNet);
-	}
+//	public void divideClockNetSet (ClockNetSet cns) {
+//		ClockNet clockNet = new ClockNet();
+//		for(Element e : cns.allElementInClockNetSet) {
+//			if (e.type == Element.BLOCK && e.block.getTypeName().equals("DIV")) {
+//				clockNet.clockNet = makeClockNetForward(e);
+//			} else if (e.type == Element.BLOCK && e.block.getTypeName().equals("MUX")) {
+//				clockNet.clockNet = makeClockNetForward(e);
+//			} else if (e.type == Element.INVAR) {
+//				clockNet.clockNet = makeClockNetForward(e);
+//			}
+//		}
+//		CircuitInfo.clockNets.add(clockNet);
+//	}
 	
 	
 	public void makeClockNets () {
@@ -62,20 +63,24 @@ public class CircuitAnalyzer {
 			CircuitInfo.clockNets.add(newClockNet);
 		}
 		for (Element block : CircuitInfo.blocks) {
-			ClockNet newClockNet = new ClockNet();
-			if (block.block.getTypeName().equals("MUX") || block.block.getTypeName().equals("DIV")) {
+			if (block.block.getTypeName().equals("DIV")) {
+				ClockNet newClockNet = new ClockNet();	
+				newClockNet.keyElement = block;
 				newClockNet.clockNet = makeClockNet(block);
+				CircuitInfo.clockNets.add(newClockNet);
 			}
-			CircuitInfo.clockNets.add(newClockNet);
-//			boolean isSameSet = false;
-//			for (ClockNet prevClockNet : CircuitInfo.clockNets) {
-//				if (compareTwoSet(newClockNet.clockNet, prevClockNet.clockNet)) {
-//					isSameSet = true;
-//				}
-//			}
-//			if(!isSameSet) {
-//				CircuitInfo.clockNets.add(newClockNet);
-//			}
+			if (block.block.getTypeName().equals("MUX")) {
+				for(IInVariableInBlock inVar : block.block.getInVariables()) {
+					for (IConnection conn : inVar.getConnectionPointIn().getConnections()) {
+						ClockNet newClockNet = new ClockNet();
+						newClockNet.keyElement = block;
+						newClockNet.param = conn.getFormalParam();
+						newClockNet.clockNet = makeClockNet(block);
+						CircuitInfo.clockNets.add(newClockNet);
+						break;
+					}
+				}
+			}
 		}
 	}
 	
@@ -89,7 +94,7 @@ public class CircuitAnalyzer {
 					continue;
 				if (e.type == Element.BLOCK && e.block.getTypeName().equals("MUX"))
 					continue;
-				currentElementSet.addAll(makeClockNetSet(e));
+				currentElementSet.addAll(makeClockNet(e));
 				return currentElementSet;
 			}
 		}
@@ -105,7 +110,7 @@ public class CircuitAnalyzer {
 					continue;
 				if (e.type == Element.BLOCK && e.block.getTypeName().equals("MUX"))
 					continue;
-				currentElementSet.addAll(makeClockNetSetForward(e));
+				currentElementSet.addAll(makeClockNetForward(e));
 				return currentElementSet;
 			}
 		}

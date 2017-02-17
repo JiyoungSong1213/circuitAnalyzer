@@ -8,6 +8,7 @@ public class ClockNet {
 	public Set<Element> clockNet; 
 	public Set<Connection> clockNetConnection;
 	public Element keyElement;
+	public String param;
 	public Set<ClockNet> prevClockNet;
 	public HashMap<Integer, Double> frequencyMap;
 	public ClockNet() {
