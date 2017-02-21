@@ -1,23 +1,32 @@
 package circuitRelated;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class CircuitInfo {
 
-	public static List<Element> circuitElem = new ArrayList<Element>();
-	public static List<Element> IPs;
-	public static List<Element> blocks;
-	public static List<Element> inputs;
-	public static List<Connection> connections;
-	public static List<ClockNetSet> clockNetSets;
-	public static Set<ClockNet> clockNets;
+	public static List<CircuitElement> circuitElem = new ArrayList<CircuitElement>();
+	public static List<CircuitElement> IPs = new ArrayList<CircuitElement>();
+	public static List<CircuitElement> blocks = new ArrayList<CircuitElement>();
+	public static List<CircuitElement> inputs = new ArrayList<CircuitElement>();
+	public static List<Connection> connections = new ArrayList<Connection>();
+	public static List<ClockNetSet> clockNetSets = new ArrayList<ClockNetSet>();
+	public static Set<ClockNet> clockNets = new HashSet<ClockNet>();
 
-	public static Element getElementByID(long LocalID) {
-		for (Element elem : circuitElem) {
+	public static CircuitElement getElementByID(long LocalID) {
+		for (CircuitElement elem : circuitElem) {
 			if (elem.LocalID == LocalID)
 				return elem;
+		}
+		return null;
+	}
+	
+	public static CircuitElement getIPByName (String IPname) {
+		for (CircuitElement IP : IPs) {
+			if (IP.outvar.getExpression().equals(IPname))
+				return IP;
 		}
 		return null;
 	}
