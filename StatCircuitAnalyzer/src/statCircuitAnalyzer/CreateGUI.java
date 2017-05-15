@@ -17,6 +17,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +26,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import circuitRelated.CircuitElement;
 import circuitRelated.CircuitInfo;
+import circuitRelated.ClockNet;
+import circuitRelated.Connection;
 
 public class CreateGUI extends Frame implements ActionListener{
 	FileDialog fileDialog;
@@ -39,6 +43,7 @@ public class CreateGUI extends Frame implements ActionListener{
 	JButton openButton;
 //	JButton loadButton;
 	JTextField IPField;
+	JTextField freqField;
 	JButton analyzeIP;
 	JButton analyzeCircuit;
 	JTextField panelSizeX;
@@ -74,11 +79,12 @@ public class CreateGUI extends Frame implements ActionListener{
 //		loadButton.setActionCommand("loadXML");
 //		loadButton.setEnabled(false);
 		
-		IPField = new JTextField(6);
-		analyzeIP = new JButton("Analyze IP");
-		analyzeIP.addActionListener(this);
-		analyzeIP.setActionCommand("analyzeIP");
-		analyzeIP.setEnabled(false);
+		IPField = new JTextField(10);
+		freqField = new JTextField(10);
+//		analyzeIP = new JButton("Analyze IP");
+//		analyzeIP.addActionListener(this);
+//		analyzeIP.setActionCommand("analyzeIP");
+//		analyzeIP.setEnabled(false);
 		
 		analyzeCircuit = new JButton("Analyze circuit");
 		analyzeCircuit.addActionListener(this);
@@ -138,9 +144,11 @@ public class CreateGUI extends Frame implements ActionListener{
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		startPanel.setPreferredSize(new Dimension(250, 100));
 		startPanel.add(analyzeCircuit);
-		menuPanel.add(new JLabel("IP Analyzer: "));
+		menuPanel.add(new JLabel("Selected IP : "));
 		menuPanel.add(IPField);
-		menuPanel.add(analyzeIP);
+		menuPanel.add(new JLabel("IP frequency: "));
+		menuPanel.add(freqField);
+//		menuPanel.add(analyzeIP);
 		menuPanel.add(startPanel);
 		JScrollPane menuJsp = new JScrollPane(menuPanel);
 		
@@ -151,6 +159,7 @@ public class CreateGUI extends Frame implements ActionListener{
 		content.add("West", menuJsp);
 		
 		XMLPanel = new DrawPanel();
+		
 		XMLPanel.setPreferredSize(new Dimension(1536, 4096));
 		JScrollPane XMLjsp = new JScrollPane(XMLPanel);
 		
@@ -196,14 +205,19 @@ public class CreateGUI extends Frame implements ActionListener{
 //					loadXMLfile.getLibrary();
 					consolePrintln("Reading XML...");
 					consoleFlush();
-					loadXMLfile.getBasicInfo();
-					consolePrintln("Creating Circuit Objects ...");
-					consoleFlush();
+					loadXMLfile.setBasicInfo(filePath.getText());
+//					consolePrintln("Creating Circuit Objects ...");
+//					consoleFlush();
 					circuitAnalyzer = new CircuitAnalyzer();
 					consolePrintln("Drawing XML...");
 					consoleFlush();
+//					String imagePath = "D:\\Users\\user\\workspace\\StatCircuitAnalyzer\\StatCircuitAnalyzer\\SAMSUNG_PROJ_EXAMPLE.png";
+//					JLabel label = new JLabel(new ImageIcon(imagePath));
+//					label.setHorizontalAlignment(JLabel.CENTER);
+//					XMLPanel.add(label);
+					
 					XMLPanel = loadXMLfile.drawPicture(XMLPanel, "");
-					System.out.println(XMLPanel.a);
+//					System.out.println(XMLPanel.a);
 				}
 				window.repaint();
 				window.setVisible(true);
@@ -213,7 +227,35 @@ public class CreateGUI extends Frame implements ActionListener{
 		} else if (cmd.equals("analyzeIP")) {
 			
 		} else if (cmd.equals("analyzeCircuit")) {
+			CircuitAnalyzer circuitAnalyzer = new CircuitAnalyzer();
 			
+			consolePrintln("Calculating Consumed Power of Clock Nets in the Circuit ...");
+			consoleFlush();
+			circuitAnalyzer.makeClockNets();
+			
+			circuitAnalyzer.makeClockNetList(CircuitInfo.getIPByName("CCLK_CA7_ABOX_TOP"));
+//			circuitAnalyzer.getFrequencies();
+//			circuitAnalyzer.calculateCap(totalPower, voltage);
+//			
+			for (ClockNet selectedClockNet : circuitAnalyzer.clockNetSetForSelectedIP) {
+//				if(selectedClockNet.keyElement.type == CircuitElement.BLOCK && selectedClockNet.keyElement.block.getTypeName().equals("MUX"))
+					consolePrintln("ClockNet_" +selectedClockNet.keyElement.LocalID + "_" + selectedClockNet.param + ": " + selectedClockNet.power +"W");
+					consoleFlush();
+//				if(selectedClockNet.keyElement.type == CircuitElement.BLOCK && selectedClockNet.keyElement.block.getTypeName().equals("DIV"))
+//					System.out.print("ClockNet_" +selectedClockNet.keyElement.LocalID + ": " + selectedClockNet.capacity);
+					System.out.println("ClockNet_" +selectedClockNet.keyElement.LocalID + "_" + selectedClockNet.param + ": " + selectedClockNet.power +"W");
+				for(ClockNet cn: CircuitInfo.clockNets) {
+					if(cn.keyElement.LocalID == selectedClockNet.keyElement.LocalID) {
+							for (Connection con : cn.clockNetConnection) {
+								System.out.println(con.start + " "+ con.startParam + " <-> " + con.end + " " + con.endParam);
+							}
+					}
+				}
+				System.out.println();
+			}
+			consolePrintln("");
+			consolePrintln("Total power: " + circuitAnalyzer.totalPower+"W");
+			consoleFlush();
 		} else if (cmd.equals("setcanvassize")) {
 			int x = Integer.parseInt(panelSizeX.getText());
 			int y = Integer.parseInt(panelSizeY.getText());
@@ -276,7 +318,7 @@ public class CreateGUI extends Frame implements ActionListener{
 		}
 		
 		if (!(filePath.getText().equals("") || libraryPath.getText().equals(""))) {
-			analyzeIP.setEnabled(true);
+//			analyzeIP.setEnabled(true);
 			analyzeCircuit.setEnabled(true);
 		}
 	}
@@ -322,6 +364,7 @@ class DrawPanel extends JPanel {
 	
 	@Override
 	public void paintComponent (Graphics g) {
+		setOpaque(false);
 		super.paintComponent(g);
 	}
 	

@@ -12,11 +12,13 @@ public class ClockNet {
 //	public Set<ClockNet> prevClockNet;
 //	public Set<ClockNet> nextClockNet;
 //	public HashMap<Integer, Double> frequencyMap;
-	public double capacity;
+	public double power;
 	public double frequency = 1.0;
 	
 	public ClockNet() {
 		clockNetDIVandMUX = new HashSet<CircuitElement>();
+		clockNetConnection = new HashSet<Connection>();
+		
 //		prevClockNet = new HashSet<ClockNet>();
 	}
 }

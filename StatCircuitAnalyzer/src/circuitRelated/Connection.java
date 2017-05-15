@@ -7,6 +7,10 @@ public class Connection {
 	public String endParam;
 	public boolean negated = false;
 
+	public Connection () {
+		
+	}
+	
 	public Connection(long start, String startParam, long end, String endParam) {
 		this.start = start;
 		this.startParam = startParam;

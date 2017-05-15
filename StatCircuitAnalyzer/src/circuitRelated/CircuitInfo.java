@@ -14,6 +14,9 @@ public class CircuitInfo {
 	public static List<Connection> connections = new ArrayList<Connection>();
 	public static List<ClockNetSet> clockNetSets = new ArrayList<ClockNetSet>();
 	public static Set<ClockNet> clockNets = new HashSet<ClockNet>();
+	public static List<InVariable> inVariables = new ArrayList<InVariable>();
+	public static List<OutVariable> outVariables = new ArrayList<OutVariable>();
+	public static List<Block> functions = new ArrayList<Block>();
 
 	public static CircuitElement getElementByID(long LocalID) {
 		for (CircuitElement elem : circuitElem) {
