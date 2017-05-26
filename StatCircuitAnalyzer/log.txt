@@ -1,0 +1,37 @@
+[IN-VARIABLEs and OSCILIATORs]
+size: [plcopen.type.group.poubody.FBDObjectImpl@ae4b630, plcopen.type.group.poubody.FBDObjectImpl@60487b4, plcopen.type.group.poubody.FBDObjectImpl@366aa8a2, plcopen.type.group.poubody.FBDObjectImpl@46bacca6, plcopen.type.group.poubody.FBDObjectImpl@6940a777]
+1 CTU_UP
+2 FILL_BIN
+3 PULSE_TIME
+7 BIN_EMPTY
+8 SETPOINT
+
+[IPs and OUT-VARIABLEs]
+size: [plcopen.type.group.poubody.FBDObjectImpl@4bdba4cc, plcopen.type.group.poubody.FBDObjectImpl@28173aad, plcopen.type.group.poubody.FBDObjectImpl@38580cf5]
+6 CTU_UP
+10 CTU_Q
+11 BIN_LEVEL
+6 CTU_UP
+10 CTU_Q
+11 BIN_LEVEL
+
+[BLOCKs]
+size: [plcopen.type.group.poubody.BlockImpl@54cf6f96, plcopen.type.group.poubody.BlockImpl@42a44c07, plcopen.type.group.poubody.BlockImpl@5377d4ac]
+4 AND2_BOOL
+5 TON
+9 CTU
+
+[CONNECTIONS]
+1 CTU_UP <-> 4 AND2_BOOL
+2 FILL_BIN <-> 4 AND2_BOOL
+4AND2_BOOL <-> 5 TON
+3 PULSE_TIME <-> 5 TON
+5TON <-> 9 CTU
+7 BIN_EMPTY <-> 9 CTU
+8 SETPOINT <-> 9 CTU
+BlockTON: Q / CTU_UP
+5 TON <-> 6 CTU_UP
+BlockCTU: Q / CTU_Q
+9 CTU <-> 10 CTU_Q
+BlockCTU: CV / BIN_LEVEL
+9 CTU <-> 11 BIN_LEVEL

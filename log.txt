@@ -1,0 +1,466 @@
+[IN-VARIABLEs and OSCILIATORs]
+size: [plcopen.type.group.poubody.FBDObjectImpl@82bd68d, plcopen.type.group.poubody.FBDObjectImpl@1115047, plcopen.type.group.poubody.FBDObjectImpl@2b9b79f7, plcopen.type.group.poubody.FBDObjectImpl@4e4344d4, plcopen.type.group.poubody.FBDObjectImpl@180a7c2f, plcopen.type.group.poubody.FBDObjectImpl@13928401, plcopen.type.group.poubody.FBDObjectImpl@63361345, plcopen.type.group.poubody.FBDObjectImpl@37878e13, plcopen.type.group.poubody.FBDObjectImpl@7c2767c8, plcopen.type.group.poubody.FBDObjectImpl@7b1256c1, plcopen.type.group.poubody.FBDObjectImpl@28eddedd, plcopen.type.group.poubody.FBDObjectImpl@23112ac5, plcopen.type.group.poubody.FBDObjectImpl@644f0048, plcopen.type.group.poubody.FBDObjectImpl@d82e65e, plcopen.type.group.poubody.FBDObjectImpl@4b5fda05, plcopen.type.group.poubody.FBDObjectImpl@613296a9, plcopen.type.group.poubody.FBDObjectImpl@7de39787, plcopen.type.group.poubody.FBDObjectImpl@67c92e73, plcopen.type.group.poubody.FBDObjectImpl@52f35f7d, plcopen.type.group.poubody.FBDObjectImpl@27811c54, plcopen.type.group.poubody.FBDObjectImpl@463fe88c, plcopen.type.group.poubody.FBDObjectImpl@68abfc8e, plcopen.type.group.poubody.FBDObjectImpl@20eb5e51, plcopen.type.group.poubody.FBDObjectImpl@fa795a4, plcopen.type.group.poubody.FBDObjectImpl@36e57754, plcopen.type.group.poubody.FBDObjectImpl@11da28a, plcopen.type.group.poubody.FBDObjectImpl@7bfe6d2e]
+1 OSCCLK_ABOX
+2 0
+3 1
+4 0
+5 1
+6 0
+7 1
+8 FIN
+9 CLKCMU_ABOX_CPUBOX
+10 CLKIO_ABOX_UAIF0
+11 CLKIO_ABOX_UAIF1
+12 CLKIO_ABOX_UAIF2
+13 CLKIO_ABOX_UAIF3
+14 CLKIO_ABoX_UAIF4
+25 FINN
+31 0
+32 1
+36 0
+37 1
+39 0
+40 1
+42 0
+43 1
+45 0
+46 1
+48 0
+49 1
+
+[IPs and OUT-VARIABLEs]
+size: [plcopen.type.group.poubody.FBDObjectImpl@4847cd40, plcopen.type.group.poubody.FBDObjectImpl@55854ccb, plcopen.type.group.poubody.FBDObjectImpl@3960ad03, plcopen.type.group.poubody.FBDObjectImpl@31ff201c, plcopen.type.group.poubody.FBDObjectImpl@47a4c6ae, plcopen.type.group.poubody.FBDObjectImpl@38b83985, plcopen.type.group.poubody.FBDObjectImpl@48c9324, plcopen.type.group.poubody.FBDObjectImpl@4cbbbc69, plcopen.type.group.poubody.FBDObjectImpl@2d4b92e6, plcopen.type.group.poubody.FBDObjectImpl@5446f2db, plcopen.type.group.poubody.FBDObjectImpl@34b35ec4, plcopen.type.group.poubody.FBDObjectImpl@257ae4cf, plcopen.type.group.poubody.FBDObjectImpl@54d79e24, plcopen.type.group.poubody.FBDObjectImpl@37646e4f, plcopen.type.group.poubody.FBDObjectImpl@190f5319, plcopen.type.group.poubody.FBDObjectImpl@6ba1906b, plcopen.type.group.poubody.FBDObjectImpl@36f1585, plcopen.type.group.poubody.FBDObjectImpl@176d15b1, plcopen.type.group.poubody.FBDObjectImpl@74991bde, plcopen.type.group.poubody.FBDObjectImpl@135cffee, plcopen.type.group.poubody.FBDObjectImpl@68e4133d, plcopen.type.group.poubody.FBDObjectImpl@175b530d, plcopen.type.group.poubody.FBDObjectImpl@2ba0edd3, plcopen.type.group.poubody.FBDObjectImpl@5f77c4c6, plcopen.type.group.poubody.FBDObjectImpl@17c249ee, plcopen.type.group.poubody.FBDObjectImpl@5a4ca320, plcopen.type.group.poubody.FBDObjectImpl@76ae03cf, plcopen.type.group.poubody.FBDObjectImpl@171eb828, plcopen.type.group.poubody.FBDObjectImpl@12160e1c, plcopen.type.group.poubody.FBDObjectImpl@2dfceadd, plcopen.type.group.poubody.FBDObjectImpl@2bca24d6, plcopen.type.group.poubody.FBDObjectImpl@49f7167f, plcopen.type.group.poubody.FBDObjectImpl@6bb397b3, plcopen.type.group.poubody.FBDObjectImpl@21d3321a, plcopen.type.group.poubody.FBDObjectImpl@5bc55e62, plcopen.type.group.poubody.FBDObjectImpl@2a70ff8b, plcopen.type.group.poubody.FBDObjectImpl@5d89eb79, plcopen.type.group.poubody.FBDObjectImpl@65f24130, plcopen.type.group.poubody.FBDObjectImpl@14b535a2, plcopen.type.group.poubody.FBDObjectImpl@39141c18, plcopen.type.group.poubody.FBDObjectImpl@2bd4ea60, plcopen.type.group.poubody.FBDObjectImpl@5cd8d5eb, plcopen.type.group.poubody.FBDObjectImpl@617df3f7, plcopen.type.group.poubody.FBDObjectImpl@7810d71c, plcopen.type.group.poubody.FBDObjectImpl@741ba594, plcopen.type.group.poubody.FBDObjectImpl@6e765171, plcopen.type.group.poubody.FBDObjectImpl@601af503, plcopen.type.group.poubody.FBDObjectImpl@1ecc762b, plcopen.type.group.poubody.FBDObjectImpl@37525763, plcopen.type.group.poubody.FBDObjectImpl@6b737521, plcopen.type.group.poubody.FBDObjectImpl@5cf637a1, plcopen.type.group.poubody.FBDObjectImpl@21767f3a, plcopen.type.group.poubody.FBDObjectImpl@43add38, plcopen.type.group.poubody.FBDObjectImpl@74906ae3, plcopen.type.group.poubody.FBDObjectImpl@19b600ef]
+20 CLKCMU_ABOX_CPUBOX
+24 PLL_AUD
+58 RSTnSYNC_CLK_ABOOX_UAI
+59 BCLK_UAIF2_ABOX_TOP
+60 RSTnSYNC_CLK_ABOOX_UAI
+61 BCLK_UAIF4_ABOX_TOP
+62 RSTnSYNC_CLK_ABOOX_UAI
+63 BCLK_UAIF3_ABOX_TOP
+64 MUX_CLK_ABOX_CPU
+65 DIV_CLK_ABOX_DSIF
+66 AUD_CODEC_MCLK_DFTMUX_ABOX
+87 CLK_RSTnSYNC_CLK_ABOX_DMIC
+91 BCLK_DSIF_ABOX_TOP
+92 CLK_RSTnSYNC_CLK_ABOX_DSIF
+103 CCLK_CA7_ABOX_TOP
+104 CLK_RSTnSYNC_CLK_ABOX_CPU
+105 BCLK_UAIF_ABOX_TOP
+106 CLK_RSTnSYNC_CLK_ABOX_UAIF0
+107 BCLK_UAIF_ABOX_TOP
+108 CLK_RSTnSYNC_CLK_ABOX_UAIF1
+109 BCLK_UAIF_ABOX_TOP
+110 CLK_RSTnSYNC_CLK_ABOX_UAIF2
+111 BCLK_UAIF_ABOX_TOP
+112 CLK_RSTnSYNC_CLK_ABOX_UAIF3
+113 BCLK_UAIF_ABOX_TOP
+114 CLK_RSTnSYNC_CLK_ABOX_UAIF4
+125 CCLK_CA7_ABOX_TOP
+126 CLK_RSTnSYNC_CLK_ABOX_CPU
+127 CLK_RSTnSYNC_CLK_ABOX_CPU
+128 CLK_RSTnSYNC_CLK_ABOX_CPU
+129 ABOX_DAR
+130 CCLK_ASB_ABOX_TOP
+131 CLK_RSTnSYNC_ABOX_CPU
+132 DIV_CLK_ABOX_BUS
+154 I_CLK_ABOX_CMU_ABOX
+155 PCLK_LHS_AXI_D_ABOX
+156 ACLK_PMU_ABOX
+157 PCLK_PPMU_ABOX
+158 ACLK_PPMU_ABOX
+159 PCLK_SMMU_ABOX
+160 PCLK_SMMU_ABOX
+161 ACLK_SYSREG_ABOX
+162 ACLK_ABOX_TOP
+163 PCLK_GPIO_ABOX
+164 CLK_AXI_US_32to12
+165 I_CLK_RSSTnSYNC_CLK_ABOX
+166 I_PCLK_BTM_ABOX
+167 ACLKM_BTM_ABOX
+168 PCLK_PERI_AXI_AS
+169 I_CLK_PERI_AXI_AS
+170 CLK_WDT_AB0xCP0
+171 CLK_TREX_ABOX
+172 I_CLK_LHM_AXI_P_ABOX
+173 ACLKS_PERI_AXI_AS
+174 CLK_RSTnSYNC_CLK_ABOX_B
+20 CLKCMU_ABOX_CPUBOX
+24 PLL_AUD
+58 RSTnSYNC_CLK_ABOOX_UAI
+59 BCLK_UAIF2_ABOX_TOP
+60 RSTnSYNC_CLK_ABOOX_UAI
+61 BCLK_UAIF4_ABOX_TOP
+62 RSTnSYNC_CLK_ABOOX_UAI
+63 BCLK_UAIF3_ABOX_TOP
+64 MUX_CLK_ABOX_CPU
+65 DIV_CLK_ABOX_DSIF
+66 AUD_CODEC_MCLK_DFTMUX_ABOX
+87 CLK_RSTnSYNC_CLK_ABOX_DMIC
+91 BCLK_DSIF_ABOX_TOP
+92 CLK_RSTnSYNC_CLK_ABOX_DSIF
+103 CCLK_CA7_ABOX_TOP
+104 CLK_RSTnSYNC_CLK_ABOX_CPU
+105 BCLK_UAIF_ABOX_TOP
+106 CLK_RSTnSYNC_CLK_ABOX_UAIF0
+107 BCLK_UAIF_ABOX_TOP
+108 CLK_RSTnSYNC_CLK_ABOX_UAIF1
+109 BCLK_UAIF_ABOX_TOP
+110 CLK_RSTnSYNC_CLK_ABOX_UAIF2
+111 BCLK_UAIF_ABOX_TOP
+112 CLK_RSTnSYNC_CLK_ABOX_UAIF3
+113 BCLK_UAIF_ABOX_TOP
+114 CLK_RSTnSYNC_CLK_ABOX_UAIF4
+125 CCLK_CA7_ABOX_TOP
+126 CLK_RSTnSYNC_CLK_ABOX_CPU
+127 CLK_RSTnSYNC_CLK_ABOX_CPU
+128 CLK_RSTnSYNC_CLK_ABOX_CPU
+129 ABOX_DAR
+130 CCLK_ASB_ABOX_TOP
+131 CLK_RSTnSYNC_ABOX_CPU
+132 DIV_CLK_ABOX_BUS
+154 I_CLK_ABOX_CMU_ABOX
+155 PCLK_LHS_AXI_D_ABOX
+156 ACLK_PMU_ABOX
+157 PCLK_PPMU_ABOX
+158 ACLK_PPMU_ABOX
+159 PCLK_SMMU_ABOX
+160 PCLK_SMMU_ABOX
+161 ACLK_SYSREG_ABOX
+162 ACLK_ABOX_TOP
+163 PCLK_GPIO_ABOX
+164 CLK_AXI_US_32to12
+165 I_CLK_RSSTnSYNC_CLK_ABOX
+166 I_PCLK_BTM_ABOX
+167 ACLKM_BTM_ABOX
+168 PCLK_PERI_AXI_AS
+169 I_CLK_PERI_AXI_AS
+170 CLK_WDT_AB0xCP0
+171 CLK_TREX_ABOX
+172 I_CLK_LHM_AXI_P_ABOX
+173 ACLKS_PERI_AXI_AS
+174 CLK_RSTnSYNC_CLK_ABOX_B
+
+[BLOCKs]
+size: [plcopen.type.group.poubody.BlockImpl@bab334c, plcopen.type.group.poubody.BlockImpl@592afc1c, plcopen.type.group.poubody.BlockImpl@2e9a42a8, plcopen.type.group.poubody.BlockImpl@7028eec, plcopen.type.group.poubody.BlockImpl@5561ec13, plcopen.type.group.poubody.BlockImpl@5ba530bf, plcopen.type.group.poubody.BlockImpl@27d6b661, plcopen.type.group.poubody.BlockImpl@34b03999, plcopen.type.group.poubody.BlockImpl@6eeb5a68, plcopen.type.group.poubody.BlockImpl@1cb9afc2, plcopen.type.group.poubody.BlockImpl@ece678a, plcopen.type.group.poubody.BlockImpl@3b87fb3b, plcopen.type.group.poubody.BlockImpl@f0bce39, plcopen.type.group.poubody.BlockImpl@5e9db7a5, plcopen.type.group.poubody.BlockImpl@239279cb, plcopen.type.group.poubody.BlockImpl@274810a1, plcopen.type.group.poubody.BlockImpl@76636877, plcopen.type.group.poubody.BlockImpl@45f0d981, plcopen.type.group.poubody.BlockImpl@759cbcd5, plcopen.type.group.poubody.BlockImpl@123677df, plcopen.type.group.poubody.BlockImpl@7f7b953e, plcopen.type.group.poubody.BlockImpl@3c046781, plcopen.type.group.poubody.BlockImpl@2c6e1ec0, plcopen.type.group.poubody.BlockImpl@dc70c1d, plcopen.type.group.poubody.BlockImpl@2e36aafe, plcopen.type.group.poubody.BlockImpl@3191e8d6, plcopen.type.group.poubody.BlockImpl@6dd5683a, plcopen.type.group.poubody.BlockImpl@58c73679, plcopen.type.group.poubody.BlockImpl@43bd06c5, plcopen.type.group.poubody.BlockImpl@7dd4813c, plcopen.type.group.poubody.BlockImpl@3b06b204, plcopen.type.group.poubody.BlockImpl@5a132fe3, plcopen.type.group.poubody.BlockImpl@7133914a, plcopen.type.group.poubody.BlockImpl@28b72331, plcopen.type.group.poubody.BlockImpl@26af22b1, plcopen.type.group.poubody.BlockImpl@65806db0, plcopen.type.group.poubody.BlockImpl@8d4098b, plcopen.type.group.poubody.BlockImpl@19eb0d0b, plcopen.type.group.poubody.BlockImpl@468e0e2d, plcopen.type.group.poubody.BlockImpl@208506a1, plcopen.type.group.poubody.BlockImpl@8b5db6b, plcopen.type.group.poubody.BlockImpl@49f70c23, plcopen.type.group.poubody.BlockImpl@7f3e8c56, plcopen.type.group.poubody.BlockImpl@77062d1e, plcopen.type.group.poubody.BlockImpl@51cece16, plcopen.type.group.poubody.BlockImpl@20295618, plcopen.type.group.poubody.BlockImpl@2b7e2277, plcopen.type.group.poubody.BlockImpl@6d5684db, plcopen.type.group.poubody.BlockImpl@4a4f5919, plcopen.type.group.poubody.BlockImpl@203c5fde, plcopen.type.group.poubody.BlockImpl@7a0bbc34, plcopen.type.group.poubody.BlockImpl@23228ff2, plcopen.type.group.poubody.BlockImpl@13958d1e, plcopen.type.group.poubody.BlockImpl@5115f21d, plcopen.type.group.poubody.BlockImpl@76581e17, plcopen.type.group.poubody.BlockImpl@41b25231, plcopen.type.group.poubody.BlockImpl@7e70ca64, plcopen.type.group.poubody.BlockImpl@8b4aad, plcopen.type.group.poubody.BlockImpl@3695540d, plcopen.type.group.poubody.BlockImpl@65e5ab34, plcopen.type.group.poubody.BlockImpl@1dbe6e06, plcopen.type.group.poubody.BlockImpl@47ba913e, plcopen.type.group.poubody.BlockImpl@5b1380f8, plcopen.type.group.poubody.BlockImpl@13e73ca5, plcopen.type.group.poubody.BlockImpl@7dc7ae81, plcopen.type.group.poubody.BlockImpl@6ee7e366, plcopen.type.group.poubody.BlockImpl@2934aa02, plcopen.type.group.poubody.BlockImpl@31cb995, plcopen.type.group.poubody.BlockImpl@436facd1, plcopen.type.group.poubody.BlockImpl@12429b09, plcopen.type.group.poubody.BlockImpl@1eaa47f9, plcopen.type.group.poubody.BlockImpl@789c95a8, plcopen.type.group.poubody.BlockImpl@462bb74e, plcopen.type.group.poubody.BlockImpl@40b7e651, plcopen.type.group.poubody.BlockImpl@ceee431, plcopen.type.group.poubody.BlockImpl@104301d1, plcopen.type.group.poubody.BlockImpl@b494550, plcopen.type.group.poubody.BlockImpl@74b3af06, plcopen.type.group.poubody.BlockImpl@f0702cd, plcopen.type.group.poubody.BlockImpl@7c2c775, plcopen.type.group.poubody.BlockImpl@46e07118, plcopen.type.group.poubody.BlockImpl@2fc23d5d, plcopen.type.group.poubody.BlockImpl@18e44302, plcopen.type.group.poubody.BlockImpl@98cd604, plcopen.type.group.poubody.BlockImpl@4c211e9c, plcopen.type.group.poubody.BlockImpl@7237ea90, plcopen.type.group.poubody.BlockImpl@48f14b87, plcopen.type.group.poubody.BlockImpl@2722886b, plcopen.type.group.poubody.BlockImpl@63b3b7ed, plcopen.type.group.poubody.BlockImpl@2e1da261, plcopen.type.group.poubody.BlockImpl@6c727956, plcopen.type.group.poubody.BlockImpl@5fa0d563]
+15 MUX2
+16 MUX2
+17 MUX2
+18 PLL
+19 PLL
+21 BUFFER
+22 BUFFER
+23 BUFFER
+26 DIV
+27 GATE
+28 GATE
+29 BUFFER
+30 PLL
+33 GATE
+34 DIV
+35 DIV
+38 DIV
+41 DIV
+44 DIV
+47 DIV
+50 MUX3
+51 MUX3
+52 MUX3
+53 MUX3
+54 MUX3
+55 MUX3
+56 BUFFER
+57 DIV
+67 BUFFER
+68 DIV
+69 DIV
+70 DIV
+71 DIV
+72 BUFFER
+73 BUFFER
+74 BUFFER
+75 BUFFER
+76 BUFFER
+77 GATE
+78 GATE
+79 BUFFER
+80 GATE
+81 BUFFER
+82 BUFFER
+83 BUFFER
+84 BUFFER
+85 GATE
+86 GATE
+88 BUFFER
+89 BUFFER
+90 BUFFER
+93 GATE
+94 GATE
+95 GATE
+96 GATE
+97 GATE
+98 GATE
+99 GATE
+100 GATE
+101 GATE
+102 GATE
+115 GATE
+116 GATE
+117 GATE
+118 GATE
+119 GATE
+120 GATE
+121 GATE
+122 BUFFER
+123 DIV
+124 BUFFER
+133 GATE
+134 GATE
+135 GATE
+136 GATE
+137 GATE
+138 GATE
+139 GATE
+140 GATE
+141 GATE
+142 GATE
+143 GATE
+144 GATE
+145 GATE
+146 GATE
+147 GATE
+148 GATE
+149 GATE
+150 GATE
+151 GATE
+152 GATE
+153 GATE
+
+[CONNECTIONS]
+1 OSCCLK_ABOX <-> 15 MUX2
+2 0 <-> 15 MUX2
+3 1 <-> 15 MUX2
+1 OSCCLK_ABOX <-> 16 MUX2
+4 0 <-> 16 MUX2
+5 1 <-> 16 MUX2
+1 OSCCLK_ABOX <-> 17 MUX2
+6 0 <-> 17 MUX2
+7 1 <-> 17 MUX2
+1 OSCCLK_ABOX <-> 18 PLL
+8 FIN <-> 18 PLL
+1 OSCCLK_ABOX <-> 19 PLL
+9 CLKCMU_ABOX_CPUBOX <-> 19 PLL
+15MUX2 <-> 21 BUFFER
+16MUX2 <-> 22 BUFFER
+17MUX2 <-> 23 BUFFER
+18PLL <-> 26 DIV
+21BUFFER <-> 27 GATE
+22BUFFER <-> 28 GATE
+23BUFFER <-> 29 BUFFER
+18PLL <-> 30 PLL
+25 FINN <-> 30 PLL
+26DIV <-> 33 GATE
+26DIV <-> 34 DIV
+26DIV <-> 35 DIV
+26DIV <-> 38 DIV
+26DIV <-> 41 DIV
+26DIV <-> 44 DIV
+26DIV <-> 47 DIV
+30PLL <-> 50 MUX3
+31 0 <-> 50 MUX3
+32 1 <-> 50 MUX3
+19PLL <-> 50 MUX3
+35DIV <-> 51 MUX3
+36 0 <-> 51 MUX3
+37 1 <-> 51 MUX3
+10 CLKIO_ABOX_UAIF0 <-> 51 MUX3
+38DIV <-> 52 MUX3
+39 0 <-> 52 MUX3
+40 1 <-> 52 MUX3
+11 CLKIO_ABOX_UAIF1 <-> 52 MUX3
+41DIV <-> 53 MUX3
+42 0 <-> 53 MUX3
+43 1 <-> 53 MUX3
+12 CLKIO_ABOX_UAIF2 <-> 53 MUX3
+44DIV <-> 54 MUX3
+45 0 <-> 54 MUX3
+46 1 <-> 54 MUX3
+13 CLKIO_ABOX_UAIF3 <-> 54 MUX3
+47DIV <-> 55 MUX3
+48 0 <-> 55 MUX3
+49 1 <-> 55 MUX3
+14 CLKIO_ABoX_UAIF4 <-> 55 MUX3
+34DIV <-> 56 BUFFER
+34DIV <-> 57 DIV
+50MUX3 <-> 67 BUFFER
+50MUX3 <-> 68 DIV
+50MUX3 <-> 69 DIV
+50MUX3 <-> 70 DIV
+18PLL <-> 71 DIV
+51MUX3 <-> 72 BUFFER
+52MUX3 <-> 73 BUFFER
+53MUX3 <-> 74 BUFFER
+54MUX3 <-> 75 BUFFER
+55MUX3 <-> 76 BUFFER
+56BUFFER <-> 77 GATE
+56BUFFER <-> 78 GATE
+57DIV <-> 79 BUFFER
+79BUFFER <-> 80 GATE
+68DIV <-> 81 BUFFER
+69DIV <-> 82 BUFFER
+70DIV <-> 83 BUFFER
+71DIV <-> 84 BUFFER
+67BUFFER <-> 85 GATE
+67BUFFER <-> 86 GATE
+81BUFFER <-> 88 BUFFER
+82BUFFER <-> 89 BUFFER
+83BUFFER <-> 90 BUFFER
+72BUFFER <-> 93 GATE
+72BUFFER <-> 94 GATE
+73BUFFER <-> 95 GATE
+73BUFFER <-> 96 GATE
+74BUFFER <-> 97 GATE
+74BUFFER <-> 98 GATE
+75BUFFER <-> 99 GATE
+75BUFFER <-> 100 GATE
+76BUFFER <-> 101 GATE
+76BUFFER <-> 102 GATE
+88BUFFER <-> 115 GATE
+88BUFFER <-> 116 GATE
+88BUFFER <-> 117 GATE
+89BUFFER <-> 118 GATE
+89BUFFER <-> 119 GATE
+90BUFFER <-> 120 GATE
+90BUFFER <-> 121 GATE
+84BUFFER <-> 122 BUFFER
+84BUFFER <-> 123 DIV
+123DIV <-> 124 BUFFER
+122BUFFER <-> 133 GATE
+122BUFFER <-> 134 GATE
+122BUFFER <-> 135 GATE
+122BUFFER <-> 136 GATE
+122BUFFER <-> 137 GATE
+122BUFFER <-> 138 GATE
+122BUFFER <-> 139 GATE
+122BUFFER <-> 140 GATE
+122BUFFER <-> 141 GATE
+122BUFFER <-> 142 GATE
+122BUFFER <-> 143 GATE
+122BUFFER <-> 144 GATE
+122BUFFER <-> 145 GATE
+122BUFFER <-> 146 GATE
+122BUFFER <-> 147 GATE
+122BUFFER <-> 148 GATE
+122BUFFER <-> 149 GATE
+122BUFFER <-> 150 GATE
+124BUFFER <-> 151 GATE
+124BUFFER <-> 152 GATE
+124BUFFER <-> 153 GATE
+BlockPLL: OUT / PLL_AUD
+18 PLL <-> 24 PLL_AUD
+BlockGATE: TIME_TO_REAL / RSTnSYNC_CLK_ABOOX_UAI
+27 GATE <-> 58 RSTnSYNC_CLK_ABOOX_UAI
+BlockGATE: TIME_TO_REAL / BCLK_UAIF2_ABOX_TOP
+27 GATE <-> 59 BCLK_UAIF2_ABOX_TOP
+BlockGATE: TIME_TO_REAL / RSTnSYNC_CLK_ABOOX_UAI
+28 GATE <-> 60 RSTnSYNC_CLK_ABOOX_UAI
+BlockGATE: TIME_TO_REAL / BCLK_UAIF4_ABOX_TOP
+28 GATE <-> 61 BCLK_UAIF4_ABOX_TOP
+BlockBUFFER: OUT / RSTnSYNC_CLK_ABOOX_UAI
+29 BUFFER <-> 62 RSTnSYNC_CLK_ABOOX_UAI
+BlockBUFFER: OUT / BCLK_UAIF3_ABOX_TOP
+29 BUFFER <-> 63 BCLK_UAIF3_ABOX_TOP
+BlockMUX3: MAX4_REAL / MUX_CLK_ABOX_CPU
+50 MUX3 <-> 64 MUX_CLK_ABOX_CPU
+BlockDIV: OUT / DIV_CLK_ABOX_DSIF
+34 DIV <-> 65 DIV_CLK_ABOX_DSIF
+BlockGATE: TIME_TO_REAL / AUD_CODEC_MCLK_DFTMUX_ABOX
+33 GATE <-> 66 AUD_CODEC_MCLK_DFTMUX_ABOX
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_DMIC
+80 GATE <-> 87 CLK_RSTnSYNC_CLK_ABOX_DMIC
+BlockGATE: TIME_TO_REAL / BCLK_DSIF_ABOX_TOP
+77 GATE <-> 91 BCLK_DSIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_DSIF
+78 GATE <-> 92 CLK_RSTnSYNC_CLK_ABOX_DSIF
+BlockGATE: TIME_TO_REAL / CCLK_CA7_ABOX_TOP
+85 GATE <-> 103 CCLK_CA7_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_CPU
+86 GATE <-> 104 CLK_RSTnSYNC_CLK_ABOX_CPU
+BlockGATE: TIME_TO_REAL / BCLK_UAIF_ABOX_TOP
+93 GATE <-> 105 BCLK_UAIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_UAIF0
+94 GATE <-> 106 CLK_RSTnSYNC_CLK_ABOX_UAIF0
+BlockGATE: TIME_TO_REAL / BCLK_UAIF_ABOX_TOP
+95 GATE <-> 107 BCLK_UAIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_UAIF1
+96 GATE <-> 108 CLK_RSTnSYNC_CLK_ABOX_UAIF1
+BlockGATE: TIME_TO_REAL / BCLK_UAIF_ABOX_TOP
+97 GATE <-> 109 BCLK_UAIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_UAIF2
+98 GATE <-> 110 CLK_RSTnSYNC_CLK_ABOX_UAIF2
+BlockGATE: TIME_TO_REAL / BCLK_UAIF_ABOX_TOP
+99 GATE <-> 111 BCLK_UAIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_UAIF3
+100 GATE <-> 112 CLK_RSTnSYNC_CLK_ABOX_UAIF3
+BlockGATE: TIME_TO_REAL / BCLK_UAIF_ABOX_TOP
+101 GATE <-> 113 BCLK_UAIF_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_UAIF4
+102 GATE <-> 114 CLK_RSTnSYNC_CLK_ABOX_UAIF4
+BlockGATE: TIME_TO_REAL / CCLK_CA7_ABOX_TOP
+115 GATE <-> 125 CCLK_CA7_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_CPU
+116 GATE <-> 126 CLK_RSTnSYNC_CLK_ABOX_CPU
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_CPU
+117 GATE <-> 127 CLK_RSTnSYNC_CLK_ABOX_CPU
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_CPU
+118 GATE <-> 128 CLK_RSTnSYNC_CLK_ABOX_CPU
+BlockGATE: TIME_TO_REAL / ABOX_DAR
+119 GATE <-> 129 ABOX_DAR
+BlockGATE: TIME_TO_REAL / CCLK_ASB_ABOX_TOP
+120 GATE <-> 130 CCLK_ASB_ABOX_TOP
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_ABOX_CPU
+121 GATE <-> 131 CLK_RSTnSYNC_ABOX_CPU
+BlockBUFFER: OUT / DIV_CLK_ABOX_BUS
+84 BUFFER <-> 132 DIV_CLK_ABOX_BUS
+BlockGATE: TIME_TO_REAL / I_CLK_ABOX_CMU_ABOX
+133 GATE <-> 154 I_CLK_ABOX_CMU_ABOX
+BlockGATE: TIME_TO_REAL / PCLK_LHS_AXI_D_ABOX
+134 GATE <-> 155 PCLK_LHS_AXI_D_ABOX
+BlockGATE: TIME_TO_REAL / ACLK_PMU_ABOX
+135 GATE <-> 156 ACLK_PMU_ABOX
+BlockGATE: TIME_TO_REAL / PCLK_PPMU_ABOX
+136 GATE <-> 157 PCLK_PPMU_ABOX
+BlockGATE: TIME_TO_REAL / ACLK_PPMU_ABOX
+137 GATE <-> 158 ACLK_PPMU_ABOX
+BlockGATE: TIME_TO_REAL / PCLK_SMMU_ABOX
+138 GATE <-> 159 PCLK_SMMU_ABOX
+BlockGATE: TIME_TO_REAL / PCLK_SMMU_ABOX
+139 GATE <-> 160 PCLK_SMMU_ABOX
+BlockGATE: TIME_TO_REAL / ACLK_SYSREG_ABOX
+140 GATE <-> 161 ACLK_SYSREG_ABOX
+BlockGATE: TIME_TO_REAL / ACLK_ABOX_TOP
+141 GATE <-> 162 ACLK_ABOX_TOP
+BlockGATE: TIME_TO_REAL / PCLK_GPIO_ABOX
+142 GATE <-> 163 PCLK_GPIO_ABOX
+BlockGATE: TIME_TO_REAL / CLK_AXI_US_32to12
+143 GATE <-> 164 CLK_AXI_US_32to12
+BlockGATE: TIME_TO_REAL / I_CLK_RSSTnSYNC_CLK_ABOX
+144 GATE <-> 165 I_CLK_RSSTnSYNC_CLK_ABOX
+BlockGATE: TIME_TO_REAL / I_PCLK_BTM_ABOX
+145 GATE <-> 166 I_PCLK_BTM_ABOX
+BlockGATE: TIME_TO_REAL / ACLKM_BTM_ABOX
+146 GATE <-> 167 ACLKM_BTM_ABOX
+BlockGATE: TIME_TO_REAL / PCLK_PERI_AXI_AS
+147 GATE <-> 168 PCLK_PERI_AXI_AS
+BlockGATE: TIME_TO_REAL / I_CLK_PERI_AXI_AS
+148 GATE <-> 169 I_CLK_PERI_AXI_AS
+BlockGATE: TIME_TO_REAL / CLK_WDT_AB0xCP0
+149 GATE <-> 170 CLK_WDT_AB0xCP0
+BlockGATE: TIME_TO_REAL / CLK_TREX_ABOX
+150 GATE <-> 171 CLK_TREX_ABOX
+BlockGATE: TIME_TO_REAL / I_CLK_LHM_AXI_P_ABOX
+151 GATE <-> 172 I_CLK_LHM_AXI_P_ABOX
+BlockGATE: TIME_TO_REAL / ACLKS_PERI_AXI_AS
+152 GATE <-> 173 ACLKS_PERI_AXI_AS
+BlockGATE: TIME_TO_REAL / CLK_RSTnSYNC_CLK_ABOX_B
+153 GATE <-> 174 CLK_RSTnSYNC_CLK_ABOX_B
