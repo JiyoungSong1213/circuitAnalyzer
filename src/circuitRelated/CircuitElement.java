@@ -12,7 +12,7 @@ public class CircuitElement {
 	public static final int BLOCK = 2;
 	public static final int OUTVAR = 3;
 	
-	public static final int OSCILATOR = 0;
+	public static final int OSCILATOR = 1;
 	public static final int INPUT = 1;
 	
 	public static final int IP = 0;

@@ -17,6 +17,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -36,6 +37,7 @@ import circuitRelated.CircuitInfo;
 import circuitRelated.CircuitUsageMapInfo;
 import circuitRelated.ClockNet;
 import circuitRelated.Connection;
+import userPatternParser.Parser;
 
 public class CreateGUI extends Frame implements ActionListener {
 	FileDialog fileDialog;
@@ -48,9 +50,8 @@ public class CreateGUI extends Frame implements ActionListener {
 	int defualtWindowHeight = 960;
 	JTextField filePath;
 	JButton openButton;
-	// JButton loadButton;
-	JTextField IPField;
-	JTextField freqField;
+	JTextField patternPath;
+	JButton patternButton;
 	JButton analyzeIP;
 	JButton analyzeCircuit;
 	JTextField panelSizeX;
@@ -83,9 +84,12 @@ public class CreateGUI extends Frame implements ActionListener {
 		openButton.addActionListener(this);
 		openButton.setActionCommand("openXML");
 
-		IPField = new JTextField(10);
-		freqField = new JTextField(10);
-
+		patternPath = new JTextField(7);
+		
+		patternButton = new JButton("Open");
+		patternButton.addActionListener(this);
+		patternButton.setActionCommand("openPattern");
+		
 		analyzeCircuit = new JButton("Analyze circuit");
 		analyzeCircuit.addActionListener(this);
 		analyzeCircuit.setActionCommand("analyzeCircuit");
@@ -98,7 +102,6 @@ public class CreateGUI extends Frame implements ActionListener {
 		setSizeButton = new JButton("Set");
 		setSizeButton.addActionListener(this);
 		setSizeButton.setActionCommand("setcanvassize");
-		setSizeButton.setEnabled(false);
 
 		xmlStatus = new JLabel("");
 
@@ -111,6 +114,18 @@ public class CreateGUI extends Frame implements ActionListener {
 		menuPanel.add(new JLabel("XML file: "));
 		menuPanel.add(filePath);
 		menuPanel.add(openButton);
+		
+		menuPanel.add(new JLabel("User-patterns: "));
+		menuPanel.add(patternPath);
+		menuPanel.add(patternButton);
+
+		menuPanel.add(new JLabel("Circuit Library: "));
+		libraryPath = new JTextField(7);
+		menuPanel.add(libraryPath);
+		libraryButton = new JButton("Open");
+		libraryButton.addActionListener(this);
+		libraryButton.setActionCommand("openlibrary");
+		menuPanel.add(libraryButton);
 
 		logFilePath = new JTextField(10);
 		logFilePath.setText("Execution_log.txt");
@@ -121,34 +136,17 @@ public class CreateGUI extends Frame implements ActionListener {
 		logButton.setActionCommand("selectlogfile");
 		logButton.setEnabled(true);
 		menuPanel.add(logButton);
-
-		menuPanel.add(new JLabel("Circuit Library: "));
-		libraryPath = new JTextField(7);
-		libraryPath.setText("lib\\Calc library_updated_20120105.txt");
-		menuPanel.add(libraryPath);
-		libraryButton = new JButton("Open");
-		libraryButton.addActionListener(this);
-		libraryButton.setActionCommand("openlibrary");
-		menuPanel.add(libraryButton);
-
+		
 		menuPanel.add(new JLabel("Canvas size : "));
 		menuPanel.add(panelSizeX);
 		menuPanel.add(new JLabel("x"));
 		menuPanel.add(panelSizeY);
 		menuPanel.add(setSizeButton);
 
-		menuPanel.add(new JLabel("                                      "));
-		menuPanel.add(new JLabel("         ===== Execute Analyzer =====   "));
-
 		JPanel startPanel = new JPanel();
 		startPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		startPanel.setPreferredSize(new Dimension(250, 100));
 		startPanel.add(analyzeCircuit);
-		menuPanel.add(new JLabel("Selected IP : "));
-		menuPanel.add(IPField);
-		menuPanel.add(new JLabel("IP frequency: "));
-		menuPanel.add(freqField);
-		// menuPanel.add(analyzeIP);
 		menuPanel.add(startPanel);
 		JScrollPane menuJsp = new JScrollPane(menuPanel);
 
@@ -189,10 +187,6 @@ public class CreateGUI extends Frame implements ActionListener {
 				openWindow(0);
 				if (!filePath.getText().equals("")) {
 					loadXMLfile = new LoadXMLFile();
-					setSizeButton.setEnabled(true);
-					// consolePrintln("Loading library...");
-					// consoleFlush();
-					// loadXMLfile.getLibrary();
 					consolePrintln("Reading XML...");
 					consoleFlush();
 					consolePrintln(filePath.getText());
@@ -225,9 +219,34 @@ public class CreateGUI extends Frame implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else if (cmd.equals("openPattern")) {
+			try{
+				openWindow(2);
+				consolePrintln("Opne user-patterns...");
+				consoleFlush();
+				consolePrintln(patternPath.getText());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else if (cmd.equals("analyzeIP")) {
-
+			
 		} else if (cmd.equals("analyzeCircuit")) {
+			
+			StringTokenizer st = new StringTokenizer(patternPath.getText(), ";");
+			while(st.hasMoreTokens()) {
+				Parser patternParser = new Parser(new File(st.nextToken()));
+				try {
+					StatCircuitAnalyzer.uLogList.add(patternParser.parseLog());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
 			CircuitAnalyzer circuitAnalyzer = new CircuitAnalyzer();
 
 			consolePrintln("Calculating Consumed Power of Clock Nets in the Circuit ...");
@@ -267,7 +286,6 @@ public class CreateGUI extends Frame implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			StringTokenizer st = new StringTokenizer(libraryPath.getText(), ";");
 			String libPath = st.nextToken();
 			consolePrintln("Reading Library file...");
@@ -281,8 +299,10 @@ public class CreateGUI extends Frame implements ActionListener {
 			// Coloring with different color per clock net
 			int i = 0;
 			for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
+				if(ci == null)
+					break;
 				circuitAnalyzer.makeClockNets(ci);
-				for (ClockNet cn : StatCircuitAnalyzer.circuitInfos[i].clockNets) {
+				for (ClockNet cn : ci.clockNets) {
 					float red = (float) Math.random();
 					float green = (float) Math.random();
 					float blue = (float) Math.random();
@@ -295,11 +315,11 @@ public class CreateGUI extends Frame implements ActionListener {
 			}
 			window.repaint();
 			window.setVisible(true);
-
+			
 			// remove irrelated clockNet and calculate each clock net's
 			// frequency
 			circuitAnalyzer.removeIrrelatedClockNetAndCalcEachClockNet();
-
+			System.out.println("end remove");
 			// Select used ClockNet for Each usage
 			circuitAnalyzer.selectUsedClockNetforEachUsage();
 		}
@@ -309,27 +329,24 @@ public class CreateGUI extends Frame implements ActionListener {
 		if (type == 0) {
 			fileDialog = new FileDialog(this, "Open XML File", FileDialog.LOAD);
 			fileDialog.setFile("*.xml");
+			fileDialog.setMultipleMode(true);
 		} else if (type == 1) {
 			fileDialog = new FileDialog(this, "Open Circuit Library", FileDialog.LOAD);
 			fileDialog.setFile("*.txt");
+			fileDialog.setMultipleMode(false);
+		} else if (type == 2) {
+			fileDialog = new FileDialog(this, "Open User-Patterns", FileDialog.LOAD);
+			fileDialog.setFile("*.txt");
+			fileDialog.setMultipleMode(true);
 		}
-
-		fileDialog.setMultipleMode(true);
 		fileDialog.setVisible(true);
 
 		String selectedFilePath = "";
 		File files[] = fileDialog.getFiles();
 		if (files.length != 0) {
-			StatCircuitAnalyzer.circuitInfos = new CircuitInfo[files.length];
-			for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
-				ci = new CircuitInfo();
-			}
 			for (File file : files) {
-
 				selectedFilePath += (file.getAbsolutePath() + ";");
 			}
-			// selectedFilePath = fileDialog.getDirectory() +
-			// fileDialog.getFile();
 		} else {
 			selectedFilePath = "";
 		}
@@ -342,10 +359,13 @@ public class CreateGUI extends Frame implements ActionListener {
 			libraryPath.setText(selectedFilePath);
 			consolePrintln("The circuit lib file is selected.");
 			consoleFlush();
+		} else if (type == 2) {
+			patternPath.setText(selectedFilePath);
+			consolePrintln("The user-pattern files are selected.");
+			consoleFlush();
 		}
 
-		if (!(filePath.getText().equals("") || libraryPath.getText().equals(""))) {
-			// analyzeIP.setEnabled(true);
+		if (!(filePath.getText().equals("") || libraryPath.getText().equals("") || patternPath.getText().equals(""))) {
 			analyzeCircuit.setEnabled(true);
 		}
 	}

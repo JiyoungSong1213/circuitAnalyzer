@@ -18,7 +18,6 @@ import circuitRelated.CircuitUsageMapInfo;
 import circuitRelated.ClockNet;
 import circuitRelated.ClockNetSet;
 import circuitRelated.Connection;
-import circuitRelated.CircuitElement;
 
 public class CircuitAnalyzer {
 
@@ -42,11 +41,11 @@ public class CircuitAnalyzer {
 	}
 
 	public void makeClockNets(CircuitInfo ci) {
-		System.out.println("IP SIZE: " + ci.IPs.size());
+//		System.out.println("IP SIZE: " + ci.IPs.size());
 		for (CircuitElement IP : ci.IPs) {
 			ClockNet newClockNet = new ClockNet();
-			CircuitElement keyElement = new CircuitElement(IP.type, IP.LocalID);
-			newClockNet.keyElement = keyElement;
+//			CircuitElement keyElement = new CircuitElement(IP.type, IP.LocalID);
+			newClockNet.keyElement = CircuitInfo.getElementByID(IP.LocalID, ci.circuitElem); //keyElement;
 			newClockNet.clockNetConnection = makeClockNet(IP, ci);
 			newClockNet.clockNetDIVandMUX = getDIVandMUXInClockNet(newClockNet, ci);
 			newClockNet.clockNetPLL = getPLLInClockNet(newClockNet, ci);
@@ -55,20 +54,23 @@ public class CircuitAnalyzer {
 		for (CircuitElement block : ci.blocks) {
 			if (block.block.getTypeName().equals("DIV") || block.block.getTypeName().equals("PLL")) {
 				ClockNet newClockNet = new ClockNet();
-				CircuitElement keyElement = new CircuitElement(block.type, block.LocalID);
-				newClockNet.keyElement = keyElement;
+//				CircuitElement keyElement = new CircuitElement(block.type, block.LocalID);
+				newClockNet.keyElement = CircuitInfo.getElementByID(block.LocalID, ci.circuitElem);//keyElement;
 				newClockNet.clockNetConnection = makeClockNet(block, ci);
 				newClockNet.clockNetDIVandMUX = getDIVandMUXInClockNet(newClockNet, ci);
+				newClockNet.clockNetPLL = getPLLInClockNet(newClockNet, ci);
 				ci.clockNets.add(newClockNet);
 			}
-			if (block.block.getTypeName().equals("MUX2") || block.block.getTypeName().equals("MUX3")) {
+			if (block.block.getTypeName().startsWith("MUX")) {
 				for (IInVariableInBlock inVar : block.block.getInVariables()) {
 					ClockNet newClockNet = new ClockNet();
-					CircuitElement keyElement = new CircuitElement(block.type, block.LocalID);
-					newClockNet.keyElement = keyElement;
+//					CircuitElement keyElement = new CircuitElement(block.type, block.LocalID);
+					newClockNet.keyElement = CircuitInfo.getElementByID(block.LocalID, ci.circuitElem);//keyElement;
 					newClockNet.param = inVar.getFormalParameter();
+					System.out.println(block.LocalID+"): "+newClockNet.param);
 					newClockNet.clockNetConnection = makeClockNet(block, newClockNet.param, ci);
 					newClockNet.clockNetDIVandMUX = getDIVandMUXInClockNet(newClockNet, ci);
+					newClockNet.clockNetPLL = getPLLInClockNet(newClockNet, ci);
 					ci.clockNets.add(newClockNet);
 				}
 			}
@@ -106,9 +108,7 @@ public class CircuitAnalyzer {
 				}
 				if (prevElem.type == CircuitElement.BLOCK && prevElem.block.getTypeName().equals("DIV"))
 					continue;
-				if (prevElem.type == CircuitElement.BLOCK && prevElem.block.getTypeName().equals("MUX2"))
-					continue;
-				if (prevElem.type == CircuitElement.BLOCK && prevElem.block.getTypeName().equals("MUX3"))
+				if (prevElem.type == CircuitElement.BLOCK && prevElem.block.getTypeName().startsWith("MUX"))
 					continue;
 				if (prevElem.type == CircuitElement.BLOCK && prevElem.block.getTypeName().equals("PLL"))
 					continue;
@@ -133,6 +133,7 @@ public class CircuitAnalyzer {
 							(prevElement.type == CircuitElement.BLOCK) ? (conn.getFormalParam())
 									: (prevElement.invar.getExpression()),
 							curElem.LocalID, inVar.getFormalParameter());
+					foundConnection.conn = conn;
 					// System.out.println("&&prevElem name:
 					// "+prevElement.block.getTypeName());
 					if (currentElementConnectionSet.size() == 0) {
@@ -157,6 +158,7 @@ public class CircuitAnalyzer {
 						(prevElement.type == CircuitElement.BLOCK) ? (conn.getFormalParam())
 								: (prevElement.invar.getExpression()),
 						curElem.LocalID, curElem.outvar.getExpression());
+				foundConnection.conn = conn;
 				if (currentElementConnectionSet.size() == 0) {
 					currentElementConnectionSet.add(foundConnection);
 				} else if (currentElementConnectionSet.size() != 0
@@ -181,8 +183,7 @@ public class CircuitAnalyzer {
 					if (prevElement.type == CircuitElement.BLOCK && (prevElement.block.getTypeName().equals("DIV")
 							|| prevElement.block.getTypeName().equals("PLL")))
 						continue;
-					if (prevElement.type == CircuitElement.BLOCK && (prevElement.block.getTypeName().equals("MUX2")
-							|| prevElement.block.getTypeName().equals("MUX3")))
+					if (prevElement.type == CircuitElement.BLOCK && (prevElement.block.getTypeName().startsWith("MUX")))
 						continue;
 					currentElementConnectionSet.addAll(makeClockNet(prevElement, ci));
 				}
@@ -192,6 +193,7 @@ public class CircuitAnalyzer {
 							(prevElement.type == CircuitElement.BLOCK) ? (conn.getFormalParam())
 									: (prevElement.invar.getExpression()),
 							curElem.LocalID, inVar.getFormalParameter());
+					foundConnection.conn = conn;
 					if (currentElementConnectionSet.size() == 0) {
 						currentElementConnectionSet.add(foundConnection);
 					} else if (currentElementConnectionSet.size() != 0
@@ -218,30 +220,35 @@ public class CircuitAnalyzer {
 										|| nextElem.block.getTypeName().equals("PLL")))
 									continue;
 								if (nextElem.type == CircuitElement.BLOCK
-										&& (nextElem.block.getTypeName().equals("MUX2")
-												|| nextElem.block.getTypeName().equals("MUX3")))
+										&& (nextElem.block.getTypeName().startsWith("MUX")))
 									continue;
 								currentElementConnectionSet.addAll(makeClockNetForward(nextElem, ci));
 							}
 						}
 						for (IInVariableInBlock inVar : nextElem.block.getInVariables()) {
+							for (IConnection conn : inVar.getConnectionPointIn().getConnections()) {
 							Connection foundConnection = new Connection(currentElem.LocalID,
 									outVar.getFormalParameter(), nextElem.LocalID, inVar.getFormalParameter());
+							foundConnection.conn = conn;
 							if (currentElementConnectionSet.size() == 0) {
 								currentElementConnectionSet.add(foundConnection);
 							} else if (currentElementConnectionSet.size() != 0
 									&& !compareConnection(foundConnection, currentElementConnectionSet)) {
 								currentElementConnectionSet.add(foundConnection);
 							}
+							}
 						}
 					} else if (nextElem.type == CircuitElement.OUTVAR) {
+						for (IConnection conn : nextElem.outvar.getConnectionPointIn().getConnections()) {
 						Connection foundConnection = new Connection(currentElem.LocalID, outVar.getFormalParameter(),
 								nextElem.LocalID, nextElem.outvar.getExpression());
+						foundConnection.conn = conn;
 						if (currentElementConnectionSet.size() == 0) {
 							currentElementConnectionSet.add(foundConnection);
 						} else if (currentElementConnectionSet.size() != 0
 								&& !compareConnection(foundConnection, currentElementConnectionSet)) {
 							currentElementConnectionSet.add(foundConnection);
+						}
 						}
 					}
 				}
@@ -260,8 +267,10 @@ public class CircuitAnalyzer {
 				CircuitElement newElem = new CircuitElement(elem.type, elem.LocalID);
 				DIVandMUXSet.add(newElem);
 			} else if (elem.type == CircuitElement.BLOCK
-					&& (elem.block.getTypeName().equals("MUX2") || elem.block.getTypeName().equals("MUX3"))) {
+					&& (elem.block.getTypeName().startsWith("MUX"))) {
 				CircuitElement newElem = new CircuitElement(elem.type, elem.LocalID);
+				if(elem.LocalID ==3 )
+					System.out.println("mmmmmmmmmmmmmm");
 				DIVandMUXSet.add(newElem);
 			}
 		}
@@ -272,10 +281,13 @@ public class CircuitAnalyzer {
 		Set<CircuitElement> PLLSet = new HashSet<CircuitElement>();
 
 		for (Connection conn : cn.clockNetConnection) {
+			System.out.println("PLLconn start: "+ conn.start);
 			CircuitElement elem = CircuitInfo.getElementByID(conn.start, ci.circuitElem);
+			System.out.println("start type: "+elem.type);
 			if (elem.type == CircuitElement.INVAR) {
 				CircuitElement newElem = new CircuitElement(elem.type, elem.LocalID);
 				PLLSet.add(newElem);
+				System.out.println("PLLID: "+newElem.LocalID);
 			}
 		}
 
@@ -298,12 +310,16 @@ public class CircuitAnalyzer {
 
 		for (ClockNet cn : ci.clockNets) {
 			if (cn.keyElement.LocalID == keyElem.LocalID) {
-				ClockNet selectedClockNet = new ClockNet();
-				selectedClockNet.keyElement = new CircuitElement(cn.keyElement.type, cn.keyElement.LocalID);
-				selectedClockNet.param = cn.param;
-				selectedClockNet.cap = cn.cap;
-				selectedClockNet.frequency = cn.frequency;
-				clockNetsForSelectedIP.add(selectedClockNet);
+//				ClockNet selectedClockNet = new ClockNet();
+//				selectedClockNet.keyElement = new CircuitElement(cn.keyElement.type, cn.keyElement.LocalID);
+//				selectedClockNet.param = cn.param;
+//				selectedClockNet.cap = cn.cap;
+//				selectedClockNet.frequency = cn.frequency;
+//				clockNetsForSelectedIP.add(selectedClockNet);
+				if(cn.isUsed)
+					clockNetsForSelectedIP.add(cn);
+				else
+					return clockNetsForSelectedIP;
 				for (CircuitElement nextKeyElem : cn.clockNetDIVandMUX) {
 					boolean isInculded = false;
 					for (ClockNet notDuplicateSelectedClockNet : clockNetSetForSelectedIP) {
@@ -382,8 +398,13 @@ public class CircuitAnalyzer {
 
 	public void selectUsedClockNetforEachUsage() {
 		for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
+			System.out.println("ci_start!!");
+			if (ci == null)
+				break;
 			for (CircuitUsageMapInfo cumi : ci.mapList.cumi) {
+				System.out.println("cumi!! type: "+cumi.type+" value: "+cumi.value);
 				for (String usedIP : cumi.mappingIp) {
+					System.out.println("ip:"+usedIP);
 					Set<ClockNet> usedCNs = new HashSet<ClockNet>();
 					usedCNs = makeClockNetSet(CircuitInfo.getIPByName(usedIP, ci.circuitElem), usedCNs, ci);
 					for (ClockNet candidateUsedCN : usedCNs) {
@@ -399,6 +420,12 @@ public class CircuitAnalyzer {
 					}
 				}
 			}
+			for (CircuitUsageMapInfo cumi : ci.mapList.cumi) {
+				for(ClockNet cn: cumi.usedClockNets) {
+					System.out.println("type: "+cumi.type+", value: "+cumi.value+", clockNet key id: "+cn.keyElement.LocalID + ", param:" + cn.param);
+				}
+				
+			}
 		}
 	}
 
@@ -413,13 +440,22 @@ public class CircuitAnalyzer {
 
 	public void removeIrrelatedClockNetAndCalcEachClockNet() {
 		for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
+			if (ci == null)
+				break;
 			for (CircuitFreqInfo cfi : ci.mapList.cfi) {
+				System.out.println(ci.circuitName+" cfi ");
 				for (ClockNet cn : ci.clockNets) {
+					if (cn.keyElement.type == CircuitElement.BLOCK)
+						System.out.println("blockblock" + "localid: "+cn.keyElement.LocalID);
 					if (cn.keyElement.type == CircuitElement.BLOCK
 							&& cn.keyElement.block.getTypeName().startsWith("MUX")
 							&& cn.keyElement.LocalID == cfi.localID) {
-						if (!cn.param.contains(Double.toString(cfi.value)))
-							ci.clockNets.remove(cn);
+						System.out.println("muxmux: "+cn.param);
+						if (!cn.param.contains(Integer.toString((int) cfi.value))) {
+							System.out.println("removed");
+//							ci.clockNets.remove(cn);
+							cn.isUsed = false;
+						}
 					}
 				}
 			}
@@ -429,8 +465,11 @@ public class CircuitAnalyzer {
 
 	public void calcClockNetFreq(CircuitInfo ci) {
 		for (ClockNet cn : ci.clockNets) {
+			System.out.println("size: "+ci.clockNets.size());
 			for (CircuitElement ce : cn.clockNetPLL) {
+				System.out.println(ci.circuitName+""+ce.LocalID);
 				for (CircuitPLLInfo pll : ci.mapList.plls) {
+					System.out.println("pll: "+pll.localID);
 					if (ce.LocalID == pll.localID) {
 						cn.frequency = pll.value;
 						calcClockNetFreqRecursive(cn, ci);
@@ -445,11 +484,17 @@ public class CircuitAnalyzer {
 			if (nextCN.frequency != -1)
 				continue;
 			for (CircuitElement ceDIVandMUX : nextCN.clockNetDIVandMUX) {
+				System.out.println("nextCNID: "+nextCN.keyElement.LocalID+" "+nextCN.param);
+				System.out.println(cn.keyElement.LocalID +" ~~ "+ ceDIVandMUX.LocalID);
 				if (cn.keyElement.LocalID == ceDIVandMUX.LocalID) {
-					if (ceDIVandMUX.block.getTypeName().equals("DIV")) {
+					System.out.println("1: "+cn.keyElement.LocalID);
+					System.out.println(cn.keyElement.block.getTypeName()+" "+cn.param);
+					if (cn.keyElement.block.getTypeName().equals("DIV")) {
+						System.out.println("2: DIV"+cn.keyElement.LocalID);
 						nextCN.frequency = cn.frequency * CircuitInfo.getFreqByID(ceDIVandMUX.LocalID, ci);
 						calcClockNetFreqRecursive(nextCN, ci);
-					} else if (ceDIVandMUX.block.getTypeName().startsWith("MUX")) {
+					} else if (cn.keyElement.block.getTypeName().startsWith("MUX") && cn.isUsed) {
+						System.out.println("3: MUX"+cn.keyElement.LocalID);
 						nextCN.frequency = cn.frequency;
 						calcClockNetFreqRecursive(nextCN, ci);
 					}

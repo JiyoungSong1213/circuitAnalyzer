@@ -9,7 +9,8 @@ public class ClockNet {
 	public Set<CircuitElement> clockNetPLL;
 	public Set<Connection> clockNetConnection;
 	public CircuitElement keyElement;
-	public String param;
+	public String param = "";
+	public boolean isUsed = true;
 //	public Set<ClockNet> prevClockNet;
 //	public Set<ClockNet> nextClockNet;
 //	public HashMap<Integer, Double> frequencyMap;

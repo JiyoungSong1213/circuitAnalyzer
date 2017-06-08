@@ -31,7 +31,7 @@ public class CircuitInfo {
 	
 	public static CircuitElement getIPByName (String IPname, List<CircuitElement> IPs) {
 		for (CircuitElement IP : IPs) {
-			if (IP.outvar.getExpression().equals(IPname))
+			if (IP.type == CircuitElement.OUTVAR && IP.outvar.getExpression().equals(IPname))
 				return IP;
 		}
 		return null;

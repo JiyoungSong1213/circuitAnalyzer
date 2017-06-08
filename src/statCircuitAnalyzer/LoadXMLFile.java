@@ -177,6 +177,7 @@ public class LoadXMLFile {
 		ci.circuitName = POU.getName();
 		
 		System.out.println("Circuit Name: ");
+		System.out.println(ci.circuitName);
 		System.out.println("[IN-VARIABLEs and OSCILIATORs]");
 
 		fw.write("[IN-VARIABLEs and OSCILIATORs]");
@@ -284,6 +285,8 @@ public class LoadXMLFile {
 			// to do list
 			if (elem.block.getTypeName().equals("REAL_TO_DINT"))
 				elem.block.setTypeName("DIV");
+			else if (elem.block.getTypeName().equals("MAX2_DINT"))
+				elem.block.setTypeName("MUX");
 			else if (elem.block.getTypeName().equals("MAX3_DINT"))
 				elem.block.setTypeName("MUX2");
 			else if (elem.block.getTypeName().equals("MAX4_DINT"))
@@ -385,6 +388,7 @@ public class LoadXMLFile {
 		}
 
 		fw.close();
+//		return ci;
 	}
 
 	public void getBasicInfo() {
@@ -618,6 +622,7 @@ public class LoadXMLFile {
 	public void drawConnection(DrawPanel dp, CircuitElement nextElem, IConnection conn, Color color, int x, int y, CircuitInfo ci) {
 		
 		dp.g2d.setColor(color);
+		conn.getRefLocalID();
 		CircuitElement prevElem = CircuitInfo.getElementByID(conn.getRefLocalID(), ci.circuitElem);
 		IPosition before = null;
 		
