@@ -15,29 +15,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import circuitRelated.CircuitElement;
-import circuitRelated.CircuitFreqInfo;
 import circuitRelated.CircuitInfo;
-import circuitRelated.CircuitUsageMapInfo;
 import circuitRelated.ClockNet;
 import circuitRelated.Connection;
-import userPatternParser.Parser;
+import patternChecker.PatternChecker;
 
 public class CreateGUI extends Frame implements ActionListener {
 	FileDialog fileDialog;
@@ -54,6 +51,8 @@ public class CreateGUI extends Frame implements ActionListener {
 	JButton patternButton;
 	JButton analyzeIP;
 	JButton analyzeCircuit;
+	JTextField prob;
+	JTextField hour;
 	JTextField panelSizeX;
 	JTextField panelSizeY;
 	JButton setSizeButton;
@@ -62,10 +61,19 @@ public class CreateGUI extends Frame implements ActionListener {
 	JButton logButton;
 	JTextField libraryPath;
 	JButton libraryButton;
+	
+	JRadioButton SPRTmethod;
+	JRadioButton CImethod;
+	JTextField confidence;
+	JTextField alpha;
+	JTextField beta;
+	JTextField delta;
+	
 	static JTextArea console;
 	static String consoleText = "";
 	CircuitAnalyzer circuitAnalyzer;
 	int cntFile;
+	String selectedLogFilePath = "";
 
 	public CreateGUI() {
 		window = new JFrame();
@@ -85,15 +93,18 @@ public class CreateGUI extends Frame implements ActionListener {
 		openButton.setActionCommand("openXML");
 
 		patternPath = new JTextField(7);
-		
+
 		patternButton = new JButton("Open");
 		patternButton.addActionListener(this);
 		patternButton.setActionCommand("openPattern");
-		
+
 		analyzeCircuit = new JButton("Analyze circuit");
 		analyzeCircuit.addActionListener(this);
 		analyzeCircuit.setActionCommand("analyzeCircuit");
 		analyzeCircuit.setEnabled(false);
+
+		prob = new JTextField(3);
+		hour = new JTextField(3);
 
 		panelSizeX = new JTextField(3);
 		panelSizeY = new JTextField(3);
@@ -114,7 +125,7 @@ public class CreateGUI extends Frame implements ActionListener {
 		menuPanel.add(new JLabel("XML file: "));
 		menuPanel.add(filePath);
 		menuPanel.add(openButton);
-		
+
 		menuPanel.add(new JLabel("User-patterns: "));
 		menuPanel.add(patternPath);
 		menuPanel.add(patternButton);
@@ -125,8 +136,43 @@ public class CreateGUI extends Frame implements ActionListener {
 		libraryButton = new JButton("Open");
 		libraryButton.addActionListener(this);
 		libraryButton.setActionCommand("openlibrary");
+		libraryButton.setEnabled(false);
 		menuPanel.add(libraryButton);
 
+		menuPanel.add(new JLabel("         ===== Verification Property =====     "));
+		menuPanel.add(new JLabel("Probability that the battery will be more than "));
+		menuPanel.add(prob);
+		menuPanel.add(new JLabel("% when run for "));
+		menuPanel.add(hour);
+		menuPanel.add(new JLabel(" hours"));
+		
+		CImethod = new JRadioButton("SSP CI method", false);
+		CImethod.addActionListener(this);
+		CImethod.setActionCommand("ci");
+		menuPanel.add(CImethod);
+		menuPanel.add(new JLabel("Confidence: "));
+		confidence = new JTextField(5);
+		menuPanel.add(confidence);
+		confidence.setEnabled(false);
+		
+		SPRTmethod = new JRadioButton("SPRT method", false);
+		SPRTmethod.addActionListener(this);
+		SPRTmethod.setActionCommand("sprt");
+		menuPanel.add(SPRTmethod);
+		menuPanel.add(new JLabel("alpha: "));
+		alpha = new JTextField(5);
+		alpha.setEnabled(false);
+		menuPanel.add(alpha);
+		menuPanel.add(new JLabel("beta: "));
+		beta = new JTextField(5);
+		beta.setEnabled(false);
+		menuPanel.add(beta);
+		menuPanel.add(new JLabel("delta: "));
+		delta = new JTextField(5);
+		delta.setEnabled(false);
+		menuPanel.add(delta);
+
+		menuPanel.add(new JLabel("         ===== Environment Setting =====     "));
 		logFilePath = new JTextField(10);
 		logFilePath.setText("Execution_log.txt");
 		menuPanel.add(new JLabel("Log file:"));
@@ -136,7 +182,7 @@ public class CreateGUI extends Frame implements ActionListener {
 		logButton.setActionCommand("selectlogfile");
 		logButton.setEnabled(true);
 		menuPanel.add(logButton);
-		
+
 		menuPanel.add(new JLabel("Canvas size : "));
 		menuPanel.add(panelSizeX);
 		menuPanel.add(new JLabel("x"));
@@ -219,8 +265,9 @@ public class CreateGUI extends Frame implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			libraryButton.setEnabled(true);
 		} else if (cmd.equals("openPattern")) {
-			try{
+			try {
 				openWindow(2);
 				consolePrintln("Opne user-patterns...");
 				consoleFlush();
@@ -229,32 +276,48 @@ public class CreateGUI extends Frame implements ActionListener {
 				e.printStackTrace();
 			}
 		} else if (cmd.equals("analyzeIP")) {
-			
+
 		} else if (cmd.equals("analyzeCircuit")) {
-			
-			StringTokenizer st = new StringTokenizer(patternPath.getText(), ";");
-			while(st.hasMoreTokens()) {
-				Parser patternParser = new Parser(new File(st.nextToken()));
-				try {
-					StatCircuitAnalyzer.uLogList.add(patternParser.parseLog());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+			try {
+				BufferedWriter out = new BufferedWriter(new FileWriter(selectedLogFilePath));
+				PatternChecker patternChecker;
+				
+				if (CImethod.isSelected()) {
+					patternChecker = new PatternChecker(PatternChecker.CIWIDTH, Double.parseDouble(confidence.getText()),0,0,0);
+				} else {
+					patternChecker = new PatternChecker(PatternChecker.SPRT,0, Double.parseDouble(alpha.getText()), Double.parseDouble(beta.getText()), Double.parseDouble(delta.getText()));
 				}
+				
+				String result = patternChecker.patternCheckingPerUser(patternPath.getText(),
+						Double.parseDouble(prob.getText()), Integer.parseInt(hour.getText())); 
+				consolePrintln("[Probability to satisfy the property result] " + result);
+				consoleFlush();
+				out.write("[Probability to satisfy the property result] " + result);
+				out.newLine();
+				for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
+					if (ci == null)
+						break;
+					consolePrintln("Name of modul: " + ci.circuitName);
+					consoleFlush();
+					out.write("Name of modul: " + ci.circuitName);
+					out.newLine();
+					for (ClockNet cn : ci.clockNets) {
+						consolePrintln("Circuit key element id+param: " + cn.keyElement.LocalID + cn.param + ", prob: "
+								+ patternChecker.getTimeInDouble(cn.usedTime)
+										/ (Double.parseDouble(hour.getText()) * patternChecker.getNumOfUser()));
+						consoleFlush();
+						out.write("Circuit key element id+param: " + cn.keyElement.LocalID + cn.param + ", prob: "
+								+ patternChecker.getTimeInDouble(cn.usedTime)
+										/ (Double.parseDouble(hour.getText()) * patternChecker.getNumOfUser()));
+						out.newLine();
+					}
+				}
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			
-			CircuitAnalyzer circuitAnalyzer = new CircuitAnalyzer();
-
-			consolePrintln("Calculating Consumed Power of Clock Nets in the Circuit ...");
-			consoleFlush();
-
-			consolePrintln("");
-			consolePrintln("Total power: " + circuitAnalyzer.totalPower + "W");
-			consoleFlush();
 		} else if (cmd.equals("setcanvassize")) {
 			int x = Integer.parseInt(panelSizeX.getText());
 			int y = Integer.parseInt(panelSizeY.getText());
@@ -267,16 +330,15 @@ public class CreateGUI extends Frame implements ActionListener {
 			try {
 				FileDialog save = new FileDialog(this, "Save Log File", FileDialog.SAVE);
 				save.setVisible(true);
-				String selectedFilePath = "";
 
 				if (save.getDirectory() != null && save.getFile() != null) {
-					selectedFilePath = save.getDirectory() + save.getFile();
+					selectedLogFilePath = save.getDirectory() + save.getFile();
 					openButton.setEnabled(true);
 				} else {
-					selectedFilePath = "";
+					selectedLogFilePath = "";
 					openButton.setEnabled(false);
 				}
-				logFilePath.setText(selectedFilePath);
+				logFilePath.setText(selectedLogFilePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -299,7 +361,7 @@ public class CreateGUI extends Frame implements ActionListener {
 			// Coloring with different color per clock net
 			int i = 0;
 			for (CircuitInfo ci : StatCircuitAnalyzer.circuitInfos) {
-				if(ci == null)
+				if (ci == null)
 					break;
 				circuitAnalyzer.makeClockNets(ci);
 				for (ClockNet cn : ci.clockNets) {
@@ -315,13 +377,23 @@ public class CreateGUI extends Frame implements ActionListener {
 			}
 			window.repaint();
 			window.setVisible(true);
-			
+
 			// remove irrelated clockNet and calculate each clock net's
 			// frequency
 			circuitAnalyzer.removeIrrelatedClockNetAndCalcEachClockNet();
-			System.out.println("end remove");
+
 			// Select used ClockNet for Each usage
 			circuitAnalyzer.selectUsedClockNetforEachUsage();
+		} else if (cmd.equals("ci")) {
+			confidence.setEnabled(true);
+			alpha.setEnabled(false);
+			beta.setEnabled(false);
+			delta.setEnabled(false);
+		} else if (cmd.equals("sprt")) {
+			confidence.setEnabled(false);
+			alpha.setEnabled(true);
+			beta.setEnabled(true);
+			delta.setEnabled(true);
 		}
 	}
 
@@ -388,7 +460,6 @@ public class CreateGUI extends Frame implements ActionListener {
 }
 
 class DrawPanel extends JPanel {
-	private final long serialVeresionUID = 1L;
 
 	BufferedImage bImage;
 	Graphics2D g2d;

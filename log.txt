@@ -1,29 +1,29 @@
 [IN-VARIABLEs and OSCILIATORs]
-size: [plcopen.type.group.poubody.FBDObjectImpl@12841755, plcopen.type.group.poubody.FBDObjectImpl@469b8b1f]
+size: [plcopen.type.group.poubody.FBDObjectImpl@373a2660, plcopen.type.group.poubody.FBDObjectImpl@169f1883]
 1 PLL_OUT
 2 SENSING_FLOW
 
 [IPs and OUT-VARIABLEs]
-size: [plcopen.type.group.poubody.FBDObjectImpl@4d82ca2, plcopen.type.group.poubody.FBDObjectImpl@6fbf822e, plcopen.type.group.poubody.FBDObjectImpl@5d331e33, plcopen.type.group.poubody.FBDObjectImpl@47eaa5f9, plcopen.type.group.poubody.FBDObjectImpl@2922c9a]
-12 BT_IP_1
-13 BT_IP_2
-14 BT_IP_3
-15 BT_IP_4
-16 BT_IP_5
-12 BT_IP_1
-13 BT_IP_2
-14 BT_IP_3
-15 BT_IP_4
-16 BT_IP_5
+size: [plcopen.type.group.poubody.FBDObjectImpl@2458ab44, plcopen.type.group.poubody.FBDObjectImpl@507dcd6f, plcopen.type.group.poubody.FBDObjectImpl@3692e826, plcopen.type.group.poubody.FBDObjectImpl@58a7a577, plcopen.type.group.poubody.FBDObjectImpl@39c437ac]
+12 WF_IP_1
+13 WF_IP_2
+14 WF_IP_3
+15 WF_IP_4
+16 WF_IP_5
+12 WF_IP_1
+13 WF_IP_2
+14 WF_IP_3
+15 WF_IP_4
+16 WF_IP_5
 
 [BLOCKs]
-size: [plcopen.type.group.poubody.BlockImpl@112f6014, plcopen.type.group.poubody.BlockImpl@54283684, plcopen.type.group.poubody.BlockImpl@46ff9495, plcopen.type.group.poubody.BlockImpl@551a962c, plcopen.type.group.poubody.BlockImpl@3fdf735b, plcopen.type.group.poubody.BlockImpl@2a56ee32, plcopen.type.group.poubody.BlockImpl@10b79cd1, plcopen.type.group.poubody.BlockImpl@119dc31d, plcopen.type.group.poubody.BlockImpl@559c3fde]
+size: [plcopen.type.group.poubody.BlockImpl@76c834e, plcopen.type.group.poubody.BlockImpl@269e885d, plcopen.type.group.poubody.BlockImpl@43f71de4, plcopen.type.group.poubody.BlockImpl@5b162b61, plcopen.type.group.poubody.BlockImpl@3803a5be, plcopen.type.group.poubody.BlockImpl@6a0d1e83, plcopen.type.group.poubody.BlockImpl@116e261b, plcopen.type.group.poubody.BlockImpl@7bc95a74, plcopen.type.group.poubody.BlockImpl@5ec22ee6]
 3 MUX
-4 BUFFER
-5 DIV
-6 GATE
+4 DIV
+5 BUFFER
+6 BUFFER
 7 GATE
-8 BUFFER
+8 GATE
 9 GATE
 10 GATE
 11 GATE
@@ -31,21 +31,21 @@ size: [plcopen.type.group.poubody.BlockImpl@112f6014, plcopen.type.group.poubody
 [CONNECTIONS]
 1 PLL_OUT <-> 3 MUX
 2 SENSING_FLOW <-> 3 MUX
-3MUX <-> 4 BUFFER
-3MUX <-> 5 DIV
-4BUFFER <-> 6 GATE
-4BUFFER <-> 7 GATE
-5DIV <-> 8 BUFFER
-8BUFFER <-> 9 GATE
-8BUFFER <-> 10 GATE
-8BUFFER <-> 11 GATE
-BlockGATE: TIME_TO_REAL / BT_IP_1
-6 GATE <-> 12 BT_IP_1
-BlockGATE: TIME_TO_REAL / BT_IP_2
-7 GATE <-> 13 BT_IP_2
-BlockGATE: TIME_TO_REAL / BT_IP_3
-9 GATE <-> 14 BT_IP_3
-BlockGATE: TIME_TO_REAL / BT_IP_4
-10 GATE <-> 15 BT_IP_4
-BlockGATE: TIME_TO_REAL / BT_IP_5
-11 GATE <-> 16 BT_IP_5
+3MUX <-> 4 DIV
+3MUX <-> 5 BUFFER
+4DIV <-> 6 BUFFER
+5BUFFER <-> 7 GATE
+5BUFFER <-> 8 GATE
+6BUFFER <-> 9 GATE
+6BUFFER <-> 10 GATE
+6BUFFER <-> 11 GATE
+BlockGATE: TIME_TO_REAL / WF_IP_1
+7 GATE <-> 12 WF_IP_1
+BlockGATE: TIME_TO_REAL / WF_IP_2
+8 GATE <-> 13 WF_IP_2
+BlockGATE: TIME_TO_REAL / WF_IP_3
+9 GATE <-> 14 WF_IP_3
+BlockGATE: TIME_TO_REAL / WF_IP_4
+10 GATE <-> 15 WF_IP_4
+BlockGATE: TIME_TO_REAL / WF_IP_5
+11 GATE <-> 16 WF_IP_5

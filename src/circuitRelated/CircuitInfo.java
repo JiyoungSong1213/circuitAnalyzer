@@ -13,11 +13,7 @@ public class CircuitInfo {
 	public List<CircuitElement> blocks = new ArrayList<CircuitElement>();
 	public List<CircuitElement> inputs = new ArrayList<CircuitElement>();
 	public List<Connection> connections = new ArrayList<Connection>();
-	public List<ClockNetSet> clockNetSets = new ArrayList<ClockNetSet>();
 	public Set<ClockNet> clockNets = new HashSet<ClockNet>();
-	public List<InVariable> inVariables = new ArrayList<InVariable>();
-	public List<OutVariable> outVariables = new ArrayList<OutVariable>();
-	public List<Block> functions = new ArrayList<Block>();
 	public CircuitFreqUsageMapInfo mapList = new CircuitFreqUsageMapInfo();
 	//mapping-related class list
 
@@ -38,7 +34,7 @@ public class CircuitInfo {
 	}
 	
 	public static double getFreqByID(long localID, CircuitInfo ci) {
-		for (CircuitFreqInfo cfi: ci.mapList.cfi) {
+		for (CircuitFreqInfo cfi: ci.mapList.CFIs) {
 			if (cfi.localID == localID)
 				return cfi.value;
 		}

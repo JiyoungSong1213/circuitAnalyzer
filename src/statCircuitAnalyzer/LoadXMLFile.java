@@ -6,23 +6,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.swing.ImageIcon;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
 
 import plcopen.inf.model.IPOU;
 import plcopen.inf.model.IVariable;
 import plcopen.inf.type.IConnection;
-import plcopen.inf.type.IDataType;
 import plcopen.inf.type.IPosition;
 import plcopen.inf.type.IVariableList;
 import plcopen.inf.type.group.elementary.IElementaryType;
@@ -70,93 +58,6 @@ public class LoadXMLFile {
 
 	}
 
-	// public void parseXML (String inputFile) {
-	// File circuitXMLfile = new File(inputFile);
-	// DocumentBuilderFactory docBuildFactory =
-	// DocumentBuilderFactory.newInstance();
-	// DocumentBuilder docBuilder = docBuildFactory.newDocumentBuilder();
-	// Document docForCircuit = docBuilder.parse(circuitXMLfile);
-	// docForCircuit.getDocumentElement().normalize();
-	//
-	// NodeList inputVarsList = docForCircuit.getElementsByTagName("inputVars");
-	// for (int i = 0; i <inputVarsList.getLength(); i++) {
-	// Node inputVarsNode = inputVarsList.item(i);
-	// NodeList inputVarNodes = inputVarsNode.getChildNodes();
-	// for (int j = 0; j < inputVarNodes.getLength(); j++) {
-	// Node inputVar = inputVarNodes.item(j);
-	// Element inputVarElem = (Element) inputVar;
-	//
-	// String inputName = inputVarElem.getAttribute("name");
-	// String inputType =
-	// inputVarElem.getElementsByTagName("type").item(0).getTextContent();
-	// Node inputValNode =
-	// inputVarElem.getElementsByTagName("initialValue").item(0);
-	// Element inputValElem = (Element) inputValNode;
-	// double inputVal =
-	// Double.parseDouble(inputValElem.getElementsByTagName("value").item(0).getTextContent());
-	//
-	// InVariable inVar = new InVariable();
-	// inVar.setExpression(inputName);
-	// if(inputType.equals("INPUT"))
-	// inVar.setType(InVariable.INPUT);
-	// else if (inputType.equals("OSCILATOR"))
-	// inVar.setType(InVariable.OSCILATOR);
-	// inVar.setValue(inputVal);
-	//// inVar.setInitialLocalID(++IDcount);
-	//
-	// NodeList bodyinVarList =
-	// docForCircuit.getElementsByTagName("inVariables");
-	// for (int k = 0; k < bodyinVarList.getLength(); k++) {
-	// Node bodyinVarNode = bodyinVarList.item(k);
-	// Element bodyinVarElem = (Element) bodyinVarNode;
-	// if (bodyinVarElem.getElementsByTagName("expression").equals(inputName)) {
-	// inVar.setValue(Long.parseLong(bodyinVarElem.getAttribute("localId")));
-	// inVar.setIDwidth(Integer.parseInt(bodyinVarElem.getAttribute("width")));
-	// inVar.setIDheight(Integer.parseInt(bodyinVarElem.getAttribute("height")));
-	// Element inVarPos = (Element)
-	// bodyinVarElem.getElementsByTagName("position").item(0);
-	// inVar.set
-	// }
-	//
-	// }
-	//
-	// CircuitInfo.inVariables.add(inVar);
-	// }
-	// }
-	//
-	// NodeList outputVarsList =
-	// docForCircuit.getElementsByTagName("outputVars");
-	// for (int i = 0; i <outputVarsList.getLength(); i++) {
-	// Node outputVarsNode = inputVarsList.item(i);
-	// NodeList outputVarNodes = outputVarsNode.getChildNodes();
-	// for (int j = 0; j < outputVarNodes.getLength(); j++) {
-	// Node outputVar = outputVarNodes.item(j);
-	// Element outputVarElem = (Element) outputVar;
-	//
-	// String outputName = outputVarElem.getAttribute("name");
-	// String outputType =
-	// outputVarElem.getElementsByTagName("type").item(0).getTextContent();
-	// Node outputValNode =
-	// outputVarElem.getElementsByTagName("initialValue").item(0);
-	// Element outputValElem = (Element) outputValNode;
-	// double outputVal =
-	// Double.parseDouble(outputValElem.getElementsByTagName("value").item(0).getTextContent());
-	//
-	// OutVariable outVar = new OutVariable();
-	// outVar.setExpression(outputName);
-	// if(outputType.equals("INPUT"))
-	// outVar.setType(InVariable.INPUT);
-	// else if (outputType.equals("OSCILATOR"))
-	// outVar.setType(InVariable.OSCILATOR);
-	// outVar.setValue(outputVal);
-	// outVar.setInitialLocalID(++IDcount);
-	//
-	// CircuitInfo.outVariables.add(outVar);
-	// }
-	// }
-	// NodeList blockLisit = docForCircuit.getElementsByTagName("block");
-	// }
-
 	public void setBasicInfo(String filePath, CircuitInfo ci) throws IOException {
 
 		File file = new File(filePath);
@@ -166,16 +67,9 @@ public class LoadXMLFile {
 
 		IPOU POU = PLCProject.getPOUs().get(indexOfTopModule);
 		FBD ld = (FBD) POU.getBody();
-		
-//		StringTokenizer st = new StringTokenizer(filePath,"\\");
-//		int cntToken = st.countTokens();
-//		for(int i = 0; i<cntToken; i++) {
-//			String circuitName = st.nextToken();
-//			if (i == cntToken-1)
-//				ci.circuitName = circuitName;
-//		}
+
 		ci.circuitName = POU.getName();
-		
+
 		System.out.println("Circuit Name: ");
 		System.out.println(ci.circuitName);
 		System.out.println("[IN-VARIABLEs and OSCILIATORs]");
@@ -213,8 +107,6 @@ public class LoadXMLFile {
 				}
 			}
 		}
-
-		// System.out.println("in var size: "+ interfaceInVar.size());
 
 		for (IInVariable in : ld.getInVariables()) {
 			fw.write(in.getLocalID() + " " + in.getExpression());
@@ -388,134 +280,6 @@ public class LoadXMLFile {
 		}
 
 		fw.close();
-//		return ci;
-	}
-
-	public void getBasicInfo() {
-
-		// IPOU POU = PLCProject.getPOUs().get(indexOfTopModule);
-		// FBD ld = (FBD) POU.getBody();
-		//
-		// CreateGUI.consolePrintln("Circuit Name: "+
-		// PLCProject.getProjectName());
-		// CreateGUI.consoleFlush();
-		//
-		// //In Variable info
-		// CreateGUI.consolePrintln("[IN-VARIABLES]");
-		// for (IInVariable in : ld.getInVariables()) {
-		// in.setInitialLocalID(in.getLocalID());
-		//
-		// Element elem = new Element(Element.INVAR, in.getLocalID());
-		// elem.invar = in;
-		//
-		// CircuitInfo.circuitElem.add(elem);
-		// CircuitInfo.inputs.add(elem);
-		//
-		// CreateGUI.consolePrintln(in.getLocalID() + " " + in.getExpression());
-		// CreateGUI.consoleFlush();
-		// }
-		//
-		// //IP and Out Variable info
-		// CreateGUI.consolePrintln("[IPs and OUT-VARIABLEs]");
-		// for (IOutVariable out : ld.getOutVariables()) {
-		// out.setInitialLocalID(out.getLocalID());
-		//
-		// Element elem = new Element(Element.OUTVAR, out.getLocalID());
-		// elem.outvar = out;
-		//
-		// CircuitInfo.circuitElem.add(elem);
-		// CircuitInfo.IPs.add(elem);
-		//
-		// CreateGUI.consolePrintln(out.getLocalID() + " " +
-		// out.getExpression());
-		// CreateGUI.consoleFlush();
-		// }
-		//
-		// //Block info
-		// CreateGUI.consolePrintln("[BLOCKS]");
-		// for (IBlock block : ld.getBlocks()) {
-		// block.setInitialLocalID(block.getLocalID());
-		//
-		// Element elem = new Element(Element.BLOCK, block.getLocalID());
-		// elem.block = block;
-		//
-		// CircuitInfo.circuitElem.add(elem);
-		// CircuitInfo.blocks.add(elem);
-		//
-		// CreateGUI.consolePrintln(block.getLocalID() + " "+
-		// block.getInstanceName());
-		// CreateGUI.consoleFlush();
-		// }
-		//
-		// //Connection info
-		// CreateGUI.consolePrintln("[CONNECTIONS]");
-		// for (Element block : CircuitInfo.blocks) {
-		// for (IInVariableInBlock inVar : block.block.getInVariables()) {
-		// for (IConnection conn :
-		// inVar.getConnectionPointIn().getConnections()) {
-		// Element prevelem = CircuitInfo.getElementByID(conn.getRefLocalID());
-		// if (prevelem == null)
-		// continue;
-		// prevelem.nextElement.add(block);
-		// block.prevElement.add(prevelem);
-		//
-		// Connection newCon = new Connection(prevelem.LocalID, (prevelem.type
-		// == Element.BLOCK) ? (conn.getFormalParam())
-		// : (prevelem.invar.getExpression()), block.LocalID,
-		// inVar.getFormalParameter());
-		// if (inVar.isNegated()) {
-		// newCon.negated = true;
-		// CreateGUI.consolePrint(" ~ ");
-		// }
-		//
-		// CircuitInfo.connections.add(newCon);
-		// prevelem.FormalParam = inVar.getFormalParameter();
-		//
-		// if (prevelem.type == Element.BLOCK) {
-		// CreateGUI.consolePrintln(prevelem.LocalID +
-		// prevelem.block.getTypeName() + " <-> " + block.LocalID + " "
-		// + block.block.getTypeName());
-		// CreateGUI.consoleFlush();
-		// } else if (prevelem.type == Element.INVAR) {
-		// CreateGUI.consolePrintln(prevelem.LocalID + " " +
-		// prevelem.invar.getExpression() + " <-> " + block.LocalID + " "
-		// + block.block.getTypeName());
-		// }
-		// }
-		// }
-		// for (Element outVar : CircuitInfo.IPs) {
-		// for (IConnection conn :
-		// outVar.outvar.getConnectionPointIn().getConnections()) {
-		// Element prevElem = CircuitInfo.getElementByID(conn.getRefLocalID());
-		// if (prevElem == null)
-		// continue;
-		// if(prevElem.block != null) {
-		// Connection newCon = new Connection(prevElem.LocalID,
-		// conn.getFormalParam(), outVar.LocalID,
-		// outVar.outvar.getExpression());
-		// if (outVar.outvar.isNegated()) {
-		// newCon.negated = true;
-		// CreateGUI.consolePrint(" ~ ");
-		// CreateGUI.consoleFlush();
-		// }
-		// CircuitInfo.connections.add(newCon);
-		// CreateGUI.consolePrintln("Block" + prevElem.block.getInstanceName() +
-		// ": ");
-		// CreateGUI.consolePrintln(conn.getFormalParam() + " / " +
-		// outVar.outvar.getExpression());
-		//
-		// CreateGUI.consolePrintln(prevElem.LocalID + " " +
-		// prevElem.block.getInstanceName() + " <-> " + outVar.LocalID + " " +
-		// outVar.outvar.getExpression());
-		// prevElem.nextElement.add(outVar);
-		// outVar.prevElement.add(prevElem);
-		// }
-		// }
-		// }
-		//
-		// CreateGUI.consolePrintln("==========Load circuit info
-		// complete===========");
-		// }
 	}
 
 	public DrawPanel drawPicture(DrawPanel dp, CircuitInfo ci, boolean isInit) {
@@ -526,19 +290,16 @@ public class LoadXMLFile {
 			return dp;
 		}
 
-		IPOU POU = PLCProject.getPOUs().get(indexOfTopModule);
-		FBD ld = (FBD) POU.getBody();
-
 		// draw IPs
 		for (CircuitElement IP : ci.IPs) {
-			String IPname = "(" + Long.toString(IP.outvar.getLocalID())+ ")" + IP.outvar.getExpression();
+			String IPname = "(" + Long.toString(IP.outvar.getLocalID()) + ")" + IP.outvar.getExpression();
 			drawChar(dp, IPname.toCharArray(), 0, IPname.length(), IP.outvar.getPosition().getX(),
 					IP.outvar.getPosition().getY() - 3);
 		}
 
 		// draw blocks
 		for (CircuitElement block : ci.blocks) {
-			String blockName = "(" + Long.toString(block.block.getLocalID())+ ")" + block.block.getTypeName();
+			String blockName = "(" + Long.toString(block.block.getLocalID()) + ")" + block.block.getTypeName();
 			dp.g2d.setColor(Color.red);
 			drawRect(dp, block.block.getPosition().getX(), block.block.getPosition().getY() + 7,
 					block.block.getSize().getWidth(), block.block.getSize().getHeight() + 18);
@@ -555,7 +316,8 @@ public class LoadXMLFile {
 			int outVarCnt = 0;
 			for (IOutVariableInBlock out : block.block.getOutVariables()) {
 				String formalParam = "OUT";
-				drawChar(dp, formalParam.toCharArray(), 0, formalParam.length(), block.block.getPosition().getX() + block.block.getSize().getWidth() +3,
+				drawChar(dp, formalParam.toCharArray(), 0, formalParam.length(),
+						block.block.getPosition().getX() + block.block.getSize().getWidth() + 3,
 						block.block.getPosition().getY() + 30 + outVarCnt * 30 + 11);
 				outVarCnt++;
 			}
@@ -582,7 +344,7 @@ public class LoadXMLFile {
 
 		// draw inputs
 		for (CircuitElement inVar : ci.inputs) {
-			String inputName = "(" + Long.toString(inVar.invar.getLocalID())+ ")" + inVar.invar.getExpression();
+			String inputName = "(" + Long.toString(inVar.invar.getLocalID()) + ")" + inVar.invar.getExpression();
 			dp.g2d.setColor(Color.black);
 			drawChar(dp, inputName.toCharArray(), 0, inputName.length(), inVar.invar.getPosition().getX(),
 					inVar.invar.getPosition().getY() - 3);
@@ -591,8 +353,6 @@ public class LoadXMLFile {
 		return dp;
 
 	}
-	
-
 
 	public void drawChar(DrawPanel dp, char[] data, int offset, int length, int x, int y) {
 		dp.g2d.drawChars(data, offset, length, x, y);
@@ -619,13 +379,14 @@ public class LoadXMLFile {
 		extendPanelSize(dp, x2, y2);
 	}
 
-	public void drawConnection(DrawPanel dp, CircuitElement nextElem, IConnection conn, Color color, int x, int y, CircuitInfo ci) {
-		
+	public void drawConnection(DrawPanel dp, CircuitElement nextElem, IConnection conn, Color color, int x, int y,
+			CircuitInfo ci) {
+
 		dp.g2d.setColor(color);
 		conn.getRefLocalID();
 		CircuitElement prevElem = CircuitInfo.getElementByID(conn.getRefLocalID(), ci.circuitElem);
 		IPosition before = null;
-		
+
 		for (IPosition current : conn.getPositions()) {
 			if (before != null) {
 				if (before.getX() == current.getX() || before.getY() == current.getY()) {
@@ -639,20 +400,28 @@ public class LoadXMLFile {
 			}
 			before = current;
 		}
-		
+
 		if (before != null) {
 			drawLine(dp, before.getX() + x, before.getY() + y, before.getX() - 80 + x, before.getY() + y);
 			dp.g2d.drawRect(before.getX() - 81 + x, before.getY() - 1 + y, 2, 2);
 		} else {
-			CreateGUI.consolePrintln("Error: No graphical information detected in Connection between " + prevElem.LocalID + " and " + nextElem.LocalID);
+			CreateGUI.consolePrintln("Error: No graphical information detected in Connection between "
+					+ prevElem.LocalID + " and " + nextElem.LocalID);
 			if (prevElem.type == CircuitElement.INVAR) {
-				drawLine(dp, prevElem.invar.getPosition().getX(), prevElem.invar.getPosition().getY(), nextElem.block.getPosition().getX(), nextElem.block.getPosition().getY() + 1 * nextElem.block.getSize().getHeight() / 2);
+				drawLine(dp, prevElem.invar.getPosition().getX(), prevElem.invar.getPosition().getY(),
+						nextElem.block.getPosition().getX(),
+						nextElem.block.getPosition().getY() + 1 * nextElem.block.getSize().getHeight() / 2);
 			} else if (nextElem.type == CircuitElement.OUTVAR) {
-				drawLine(dp, prevElem.block.getPosition().getX() + prevElem.block.getSize().getWidth(), prevElem.block.getPosition().getY() + prevElem.block.getSize().getHeight() / 2, nextElem.outvar.getPosition().getX(), nextElem.outvar.getPosition().getY());
+				drawLine(dp, prevElem.block.getPosition().getX() + prevElem.block.getSize().getWidth(),
+						prevElem.block.getPosition().getY() + prevElem.block.getSize().getHeight() / 2,
+						nextElem.outvar.getPosition().getX(), nextElem.outvar.getPosition().getY());
 			} else {
-				drawLine(dp, prevElem.block.getPosition().getX() + prevElem.block.getSize().getWidth(), prevElem.block.getPosition().getY() + prevElem.block.getSize().getHeight() / 2, nextElem.block.getPosition().getX(), nextElem.block.getPosition().getY() + 1 * nextElem.block.getSize().getHeight() / 2);
+				drawLine(dp, prevElem.block.getPosition().getX() + prevElem.block.getSize().getWidth(),
+						prevElem.block.getPosition().getY() + prevElem.block.getSize().getHeight() / 2,
+						nextElem.block.getPosition().getX(),
+						nextElem.block.getPosition().getY() + 1 * nextElem.block.getSize().getHeight() / 2);
 			}
-		CreateGUI.consoleFlush();
+			CreateGUI.consoleFlush();
 		}
 	}
 }
